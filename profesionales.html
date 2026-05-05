@@ -9,594 +9,113 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #0A0A0A;
-      --accent: #CC2936;
-      --accent-hover: #E8303D;
-      --muted-red: #6B1219;
-      --text: #F5F0EB;
-      --text-secondary: #888580;
-      --border: #1a1a1a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Inter', -apple-system, sans-serif;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    :root { --bg: #050505; --accent: #CC2936; --accent-hover: #E8303D; --muted-red: #6B1219; --text: #F5F0EB; --text-secondary: #888580; --border: #1a1a1a; --serif: 'Cormorant Garamond', serif; --sans: 'Inter', sans-serif; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
-    
-    /* Reveal animations */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    
-    /* Navbar */
-    .navbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 28px 32px; position: absolute; top: 0; left: 0; right: 0; z-index: 10;
-    }
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 24px;
-      z-index: 100;
-      transition: all 0.4s ease;
-    }
-    .navbar.scrolled {
-      background: rgba(5, 5, 5, 0.95);
-      border-bottom: 1px solid #1A1A1A;
-      padding: 18px 24px;
-    }
-    .logo-wrapper {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-    .logo {
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: 28px;
-      text-decoration: none;
-      line-height: 1;
-    }
-    .logo-n { color: var(--accent); }
-    .logo-rest { color: var(--text); }
+
+    /* NAVBAR */
+    .navbar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; z-index: 100; transition: 0.4s; }
+    .navbar.scrolled { background: rgba(5,5,5,0.95); border-bottom: 1px solid #1A1A1A; }
+    .logo { font-family: var(--serif); font-weight: 700; font-size: 28px; text-decoration: none; color: var(--text); }
+    .logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 32px; }
-    .nav-links a {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: #888580;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: #F5F0EB; }
+    .nav-links a { font-size: 13px; color: #888580; text-decoration: none; }
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .menu-toggle span { display: block; width: 20px; height: 1px; background: #888580; margin: 4px 0; }
 
-    /* Hero */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      background-image: url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80");
-      background-size: cover;
-      background-position: center;
-      background-attachment: scroll;
-      overflow: hidden;
-    }
-    /* Gradient overlay */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(5,5,5,0.90) 40%, rgba(5,5,5,0.60) 100%);
-      z-index: 0;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 720px;
-      width: 100%;
-      text-align: left;
-    }
-    .hero-bg-text {
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: clamp(160px, 18vw, 280px);
-      color: rgba(255,255,255,0.07);
-      letter-spacing: -2px;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      z-index: 1;
-    }
-    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 24px; font-weight: 500; }
-    .hero h1 { font-family: var(--serif); font-weight: 700; font-size: 42px; line-height: 1.1; color: var(--text); margin-bottom: 24px; }
-    .hero p { font-size: 16px; color: var(--text-secondary); max-width: 480px; line-height: 1.6; margin-bottom: 32px; }
-    .btn-cta { 
-      background: var(--accent); color: #fff; border: none; padding: 16px 36px; 
-      font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
-      border-radius: 2px; cursor: pointer; transition: background 0.3s; text-decoration: none; display: inline-block;
-    }
-    .btn-cta:hover { background: var(--accent-hover); }
-    .trust-note { font-size: 12px; color: var(--text-secondary); margin-top: 12px; display: block; }
+    /* HERO */
+    .hero { min-height: 80vh; display: flex; align-items: center; padding-top: 100px; background: #0a0a0a; }
+    .hero h1 { font-family: var(--serif); font-size: 72px; line-height: 1.1; margin-bottom: 24px; }
+    .btn-cta { background: var(--accent); color: #fff; padding: 16px 32px; text-decoration: none; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; display: inline-block; }
 
-    /* Objections */
-    .objections { padding: 64px 0; border-top: 1px solid var(--border); }
-    .objections-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
-    .objection-item { padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-    .objection-item:last-child { border-bottom: none; }
-    .objection-q { font-size: 15px; font-weight: 600; color: var(--text); }
-    .objection-a { font-size: 14px; color: var(--text-secondary); margin-top: 12px; line-height: 1.7; }
+    /* HOW */
+    .how { padding: 100px 0; }
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+    .step-num { font-family: var(--serif); font-size: 88px; color: var(--muted-red); line-height: 1; }
 
-    /* How it works */
-    .how { padding: 64px 0; border-top: 1px solid var(--border); }
-    .how h2 { font-family: var(--serif); font-weight: 700; font-size: 32px; margin-bottom: 64px; line-height: 1.1; }
-    .how-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
-    .step-num { font-family: var(--serif); font-weight: 700; font-size: 80px; color: var(--muted-red); line-height: 1; }
-    .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 16px; }
-    .step-desc { font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.7; }
+    /* FORM */
+    .aplicar { padding: 100px 0; background: #0d0505; border-top: 1px solid var(--muted-red); }
+    .msf-wrapper { min-height: 400px; position: relative; }
+    .msf-step { display: none; }
+    .msf-step.active { display: block; }
+    .msf-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid #333; padding: 16px 0; font-size: 24px; color: #fff; outline: none; }
 
-    /* ===== MULTI-STEP FORM ===== */
-    .aplicar {
-      background: #0d0505;
-      border-top: 1px solid var(--muted-red);
-      padding: 52px 32px;
-      position: relative;
-    }
-    .aplicar .container { max-width: 1100px; margin: 0 auto; }
-    .aplicar-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 64px;
-      align-items: start;
-    }
-    .aplicar-headline {
-      font-family: var(--serif);
-      font-weight: 700;
-      font-size: 36px;
-      line-height: 1.1;
-      color: var(--text);
-      margin-top: 16px;
-    }
-    .aplicar-desc {
-      font-size: 16px;
-      color: var(--text-secondary);
-      margin-top: 24px;
-      max-width: 420px;
-      line-height: 1.7;
-    }
-    .aplicar-bullets {
-      list-style: none;
-      margin-top: 32px;
-    }
-    .aplicar-bullets li {
-      font-size: 14px;
-      color: var(--text);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-    }
-    .aplicar-bullets li::before {
-      content: '';
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background: #CC2936;
-      margin-right: 12px;
-    }
-    .msf-trust-signal {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: #888580;
-      text-align: center;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      font-weight: 400;
-    }
-    .msf-progress { width: 100%; height: 1px; background: var(--border); margin-bottom: 48px; }
-    .msf-bar { height: 100%; background: var(--muted-red); width: 0%; transition: width 0.4s ease; }
-    .msf-wrapper { position: relative; min-height: 360px; }
-    .msf-step {
-      position: absolute; top: 0; left: 0; right: 0;
-      opacity: 0; transform: translateX(20px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      pointer-events: none;
-      display: flex; flex-direction: column;
-    }
-    .msf-step.active { opacity: 1; transform: translateX(0); pointer-events: auto; position: relative; }
-    .msf-step.exit-fwd { opacity: 0; transform: translateX(-20px); }
-    .msf-step.exit-back { opacity: 0; transform: translateX(20px); }
-    .msf-label {
-      font-family: var(--sans); font-size: 10px; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 2px; color: var(--muted-red); margin-bottom: 20px;
-    }
-    .msf-question {
-      font-family: var(--serif); font-weight: 700; font-size: 28px;
-      line-height: 1.15; color: var(--text); margin-bottom: 32px;
-    }
-    .msf-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; margin-top: -24px; }
-    .msf-input {
-      width: 100%; background: transparent; border: none;
-      border-bottom: 1px solid #333; padding: 12px 0;
-      font-family: var(--sans); font-size: 20px; color: var(--text);
-      outline: none; transition: border-color 150ms ease; margin-top: 16px;
-    }
-    .msf-input::placeholder { color: #555; }
-    .msf-input:focus, .msf-input.filled { border-bottom-color: var(--accent); }
-    .msf-input.error { border-bottom-color: var(--accent); }
-    .msf-error { font-size: 12px; color: var(--accent); margin-top: 8px; display: none; }
-    .msf-error.show { display: block; }
-    .msf-nav { display: flex; align-items: center; gap: 24px; margin-top: 48px; }
-    .msf-btn-next, .msf-btn-submit {
-      font-family: var(--sans); font-size: 13px; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 2px; padding: 16px 36px;
-      background: var(--accent); color: #fff; border: none; border-radius: 2px;
-      cursor: pointer; transition: background 0.3s, opacity 0.3s;
-    }
-    .msf-btn-next:hover, .msf-btn-submit:hover { background: var(--accent-hover); }
-    .msf-btn-next:disabled, .msf-btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
-    .msf-btn-back {
-      font-family: var(--sans); font-size: 13px; color: var(--text-secondary);
-      background: none; border: none; cursor: pointer; transition: color 0.3s; padding: 0;
-    }
-    .msf-btn-back:hover { color: var(--text); }
-    .msf-centered { text-align: center; align-items: center; }
-    .msf-centered .msf-nav { justify-content: center; }
-    .msf-welcome-hl {
-      font-family: var(--serif); font-weight: 700; font-size: 36px;
-      line-height: 1.1; color: var(--text);
-    }
-    .msf-welcome-desc { font-size: 16px; color: var(--text-secondary); max-width: 480px; margin-top: 20px; }
-    .msf-confirm-line { width: 40px; height: 1px; background: var(--muted-red); margin-bottom: 32px; }
-    .msf-confirm-hl { font-family: var(--serif); font-weight: 700; font-size: 32px; color: var(--text); }
-    .msf-confirm-desc { font-size: 16px; color: var(--text-secondary); max-width: 440px; margin-top: 20px; text-align: center; }
-    .msf-confirm-small { font-size: 13px; color: #444; margin-top: 40px; }
-    .msf-confirm-link { color: var(--accent); text-decoration: none; display: inline-block; margin-top: 8px; font-size: 14px; }
-    .msf-confirm-link:hover { text-decoration: underline; }
-    .msf-submit-error { font-size: 13px; color: var(--accent); margin-top: 12px; display: none; }
-    .msf-submit-error.show { display: block; }
-
-    /* Footer */
-    .footer { background: #050505; padding: 48px 0; border-top: 1px solid var(--border); text-align: center; }
-    .footer-logo { font-family: var(--serif); font-weight: 700; font-size: 22px; text-decoration: none; color: var(--text); }
-    .footer-logo span { color: var(--accent); }
-    .footer-links { display: flex; justify-content: center; gap: 24px; margin: 24px 0 16px; }
-    .footer-links a { font-size: 12px; color: var(--text-secondary); text-decoration: none; }
-    .footer-copy { font-size: 11px; color: #333; }
-
-    @media (min-width: 768px) {
-      .hero h1 { font-size: 72px; }
-      .objections { padding: 100px 0; }
-      .objections-grid { grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); padding-top: 48px; }
-      .objection-item { border-bottom: none; border-left: 1px solid var(--border); padding: 0 32px; }
-      .objection-item:first-child { border-left: none; padding-left: 0; }
-      .how { padding: 100px 0; }
-      .how h2 { font-size: 48px; }
-      .how-grid { grid-template-columns: repeat(3, 1fr); }
-      .aplicar { padding: 120px 32px; }
-      .aplicar-grid { grid-template-columns: 1fr 1fr; gap: 80px; }
-      .aplicar-form-container { padding: 80px 0; }
-      .msf-question { font-size: 40px; }
-      .msf-welcome-hl { font-size: 52px; }
-      .msf-confirm-hl { font-size: 48px; }
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #0A0A0A; }
+      .nav-links.active { display: flex; }
+      .hero { padding: 100px 20px 60px; }
+      .hero h1 { font-size: 38px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .step-num { font-size: 64px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="logo-wrapper">
-      <span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span>
-    </a>
-    <div class="nav-links">
-      <a href="estudiantes.html">Para estudiantes</a>
-      <a href="profesionales.html">Para profesionales</a>
+    <a href="index.html" class="logo"><span>N</span>ovan</a>
+    <button class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="nav-links">
+      <a href="estudiantes.html">Estudiantes</a>
+      <a href="profesionales.html">Profesionales</a>
     </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-bg-text">NOVAN</div>
     <div class="container">
-      <div class="hero-content reveal">
-        <p class="eyebrow">PARA PROFESIONALES</p>
-        <h1>Tu carrera ya vale.<br>Empezá a cobrar por ella.</h1>
-        <p>Atendés consultas de 30 minutos cuando querés. Sin clientes fijos. Sin compromisos.</p>
-        <a href="#aplicar" class="btn-cta">QUIERO ENTRAR A LA RED →</a>
-        <span class="trust-note">INSCRIPCIÓN ABIERTA</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="objections">
-    <div class="container">
-      <p class="eyebrow reveal">LO QUE TODOS PREGUNTAN</p>
-      <div class="objections-grid">
-        <div class="objection-item reveal">
-          <p class="objection-q">¿Cómo funciona?</p>
-          <p class="objection-a">30 minutos por consulta. Vos ponés tu disponibilidad.</p>
-        </div>
-        <div class="objection-item reveal delay-1">
-          <p class="objection-q">¿Necesito experiencia docente?</p>
-          <p class="objection-a">No. No enseñás. Contás cómo es tu trabajo en serio.</p>
-        </div>
-        <div class="objection-item reveal delay-2">
-          <p class="objection-q">¿Cómo cobro?</p>
-          <p class="objection-a">Por transferencia bancaria directa. Novan gestiona el cobro y te deposita tu parte automáticamente.</p>
-        </div>
-      </div>
+      <h1 class="reveal">Tu carrera ya vale.<br>Empezá a cobrar por ella.</h1>
+      <p class="reveal" style="color: #888; margin-bottom: 40px;">Consultas de 30 minutos cuando vos quieras. Sin compromisos.</p>
+      <a href="#aplicar" class="btn-cta reveal">ENTRAR A LA RED →</a>
     </div>
   </section>
 
   <section class="how">
     <div class="container">
-      <p class="eyebrow reveal">CÓMO FUNCIONA</p>
-      <h2 class="reveal">Tres pasos. Sin complicaciones.</h2>
       <div class="how-grid">
-        <div class="how-step reveal">
-          <div class="step-num">01</div>
-          <p class="step-title">Completás tu perfil en 3 minutos</p>
-          <p class="step-desc">Carrera, experiencia y disponibilidad. Nada más.</p>
+        <div class="reveal">
+          <p class="step-num">01</p>
+          <p style="font-weight: 500; margin: 16px 0;">Perfil en 3 min</p>
+          <p style="color: #888; font-size: 14px;">Carrera y disponibilidad. Nada más.</p>
         </div>
-        <div class="how-step reveal delay-1">
-          <div class="step-num">02</div>
-          <p class="step-title">Publicamos tu disponibilidad</p>
-          <p class="step-desc">Novan arma tu perfil y lo muestra a estudiantes que buscan tu carrera.</p>
+        <div class="reveal">
+          <p class="step-num">02</p>
+          <p style="font-weight: 500; margin: 16px 0;">Publicamos tu perfil</p>
+          <p style="color: #888; font-size: 14px;">Te mostramos a estudiantes que buscan tu carrera.</p>
         </div>
-        <div class="how-step reveal delay-2">
-          <div class="step-num">03</div>
-          <p class="step-title">Te llega la reserva, vos confirmás y cobrás</p>
-          <p class="step-desc">Recibís la notificación, confirmás el horario y te pagamos automáticamente.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FORMULARIO MULTI-PASO -->
-  <section class="aplicar" id="aplicar">
-    <div class="container">
-      <div class="aplicar-grid">
-        <div class="aplicar-copy reveal">
-          <h2 class="aplicar-headline">Monetizá tus conocimientos y experiencias.</h2>
-          <p class="aplicar-desc">Atendés consultas de 30 minutos sobre tu carrera. Vos ponés tu disponibilidad. Novan se encarga del resto.</p>
-          <ul class="aplicar-bullets">
-            <li>No enseñás. Contás.</li>
-            <li>Vos ponés el precio. Nosotros llenamos tu agenda.</li>
-            <li>30 minutos por consulta. Vos ponés tu disponibilidad.</li>
-          </ul>
-        </div>
-
-        <div class="aplicar-form-container reveal">
-          <div class="msf-trust-signal">INSCRIPCIÓN ABIERTA</div>
-          <div class="msf-progress"><div class="msf-bar" id="msf-bar"></div></div>
-          <div class="msf-wrapper" id="msf-wrapper">
-
-            <!-- PASO 0: Bienvenida -->
-            <div class="msf-step msf-centered active" data-step="0">
-              <p class="msf-label">PARA PROFESIONALES</p>
-              <h2 class="msf-welcome-hl">Sumate a Novan.</h2>
-              <p class="msf-welcome-desc">Solo aceptamos profesionales que ya lo vivieron.</p>
-              <div class="msf-nav"><button class="msf-btn-next" data-next="1">EMPEZAR →</button></div>
-            </div>
-
-            <!-- PASO 1: Nombre -->
-            <div class="msf-step" data-step="1">
-              <p class="msf-label">01 / 05</p>
-              <h2 class="msf-question">¿Cómo te llamás?</h2>
-              <input type="text" class="msf-input" id="msf-nombre" placeholder="Tu nombre completo" autocomplete="name">
-              <p class="msf-error" id="err-nombre">Necesitamos tu nombre para continuar.</p>
-              <div class="msf-nav"><button class="msf-btn-next" data-next="2">SIGUIENTE →</button></div>
-            </div>
-
-            <!-- PASO 2: Carrera -->
-            <div class="msf-step" data-step="2">
-              <p class="msf-label">02 / 05</p>
-              <h2 class="msf-question">¿En qué trabajás o qué estudiaste?</h2>
-              <input type="text" class="msf-input" id="msf-carrera" placeholder="Ej: Abogada, Diseñador industrial, Médico clínico">
-              <p class="msf-error" id="err-carrera">Contanos en qué sos experto.</p>
-              <div class="msf-nav">
-                <button class="msf-btn-back" data-back="1">← Atrás</button>
-                <button class="msf-btn-next" data-next="3">SIGUIENTE →</button>
-              </div>
-            </div>
-
-            <!-- PASO 3: Antigüedad -->
-            <div class="msf-step" data-step="3">
-              <p class="msf-label">03 / 05</p>
-              <h2 class="msf-question">¿Hace cuánto te recibiste o ejercés?</h2>
-              <input type="text" class="msf-input" id="msf-anios" placeholder="Ej: 2 años, recién recibido, 5 años">
-              <p class="msf-error" id="err-anios">Cualquier respuesta es válida, no te la robes.</p>
-              <div class="msf-nav">
-                <button class="msf-btn-back" data-back="2">← Atrás</button>
-                <button class="msf-btn-next" data-next="4">SIGUIENTE →</button>
-              </div>
-            </div>
-
-            <!-- PASO 4: Contacto -->
-            <div class="msf-step" data-step="4">
-              <p class="msf-label">04 / 05</p>
-              <h2 class="msf-question">¿Dónde te encontramos?</h2>
-              <p class="msf-subtitle">Instagram, LinkedIn o WhatsApp. Lo que uses más.</p>
-              <input type="text" class="msf-input" id="msf-contacto" placeholder="@tuusuario o +54 9 11...">
-              <p class="msf-error" id="err-contacto">Necesitamos una forma de contactarte.</p>
-              <div class="msf-nav">
-                <button class="msf-btn-back" data-back="3">← Atrás</button>
-                <button class="msf-btn-next" data-next="5">SIGUIENTE →</button>
-              </div>
-            </div>
-
-            <!-- PASO 5: Email -->
-            <div class="msf-step" data-step="5">
-              <p class="msf-label">05 / 05</p>
-              <h2 class="msf-question">¿Cuál es tu mail?</h2>
-              <input type="email" class="msf-input" id="msf-email" placeholder="tu@mail.com">
-              <p class="msf-error" id="err-email">Revisá que el mail esté bien escrito.</p>
-              <div class="msf-nav">
-                <button class="msf-btn-back" data-back="4">← Atrás</button>
-                <button class="msf-btn-submit" id="msf-submit">Quiero estar en la red →</button>
-              </div>
-              <p class="msf-submit-error" id="msf-submit-error">Algo salió mal. Intentá de nuevo o escribinos a hola@novan.ar</p>
-            </div>
-
-            <!-- PASO 6: Confirmación -->
-            <div class="msf-step msf-centered" data-step="6">
-              <div class="msf-confirm-line"></div>
-              <h2 class="msf-confirm-hl">Listo.</h2>
-              <p class="msf-confirm-desc">Estamos construyendo Novan. Te avisamos cuando estés listo para recibir tu primera consulta.</p>
-              <p class="msf-confirm-small">Mientras tanto, seguinos en Instagram.</p>
-              <a href="#" class="msf-confirm-link">→ @novan.ar</a>
-            </div>
-
-          </div>
+        <div class="reveal">
+          <p class="step-num">03</p>
+          <p style="font-weight: 500; margin: 16px 0;">Cobrás directo</p>
+          <p style="color: #888; font-size: 14px;">Gestionamos el pago y te llega automáticamente.</p>
         </div>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container">
-      <a href="#" class="logo-wrapper" style="justify-content: center; margin-bottom: 24px;">
-        <span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span>
-      </a>
-      <div class="footer-links">
-        <a href="#">Instagram →</a>
-        <a href="#">TikTok →</a>
-      </div>
-      <p class="footer-copy">© 2026 Novan. Buenos Aires.</p>
-    </div>
+    <p style="font-size: 12px; color: #444;">© 2026 Novan. Buenos Aires.</p>
   </footer>
 
   <script>
-    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQmdipFykqZJ60qOzZ-NbOLYTc4_O57gc8z36i5oWAi-RLlkUAPNaKCHnVgkaf7kPr/exec';
-
     document.addEventListener('DOMContentLoaded', function() {
-      // Navbar scroll effect
       var navbar = document.getElementById('navbar');
       window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
-        else { navbar.classList.remove('scrolled'); }
+        if (window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
       });
-
-      // Reveal animations
+      var menuToggle = document.getElementById('menu-toggle');
+      var navLinks = document.getElementById('nav-links');
+      menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        navbar.classList.toggle('menu-open');
+      });
       var revealEls = document.querySelectorAll('.reveal');
       var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-        });
-      }, { threshold: 0.15 });
+        entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
       revealEls.forEach(function(el) { observer.observe(el); });
-
-      // --- Multi-step form ---
-      var current = 0;
-      var progressPcts = [0, 20, 40, 60, 80, 95, 100];
-      var formData = { nombre: '', carrera: '', anios: '', contacto: '', email: '', pagina: 'profesionales' };
-      var bar = document.getElementById('msf-bar');
-      var steps = document.querySelectorAll('.msf-step');
-      var fieldMap = {
-        1: { input: 'msf-nombre', error: 'err-nombre', key: 'nombre' },
-        2: { input: 'msf-carrera', error: 'err-carrera', key: 'carrera' },
-        3: { input: 'msf-anios', error: 'err-anios', key: 'anios' },
-        4: { input: 'msf-contacto', error: 'err-contacto', key: 'contacto' },
-        5: { input: 'msf-email', error: 'err-email', key: 'email' }
-      };
-
-      function updateBar() { bar.style.width = progressPcts[current] + '%'; }
-
-      function goTo(target) {
-        if (target === current) return;
-        var fwd = target > current;
-        var oldStep = steps[current];
-        var newStep = steps[target];
-        oldStep.classList.remove('active');
-        oldStep.classList.add(fwd ? 'exit-fwd' : 'exit-back');
-        setTimeout(function() {
-          oldStep.classList.remove('exit-fwd', 'exit-back');
-          newStep.classList.add('active');
-          current = target;
-          updateBar();
-          var f = fieldMap[current];
-          if (f) { var inp = document.getElementById(f.input); if (inp) inp.focus(); }
-        }, 250);
-      }
-
-      function validate(step) {
-        var f = fieldMap[step];
-        if (!f) return true;
-        var inp = document.getElementById(f.input);
-        var err = document.getElementById(f.error);
-        var val = inp.value.trim();
-        formData[f.key] = val;
-        if (step === 5 && val) {
-          var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-          if (!emailOk) { inp.classList.add('error'); err.classList.add('show'); return false; }
-        }
-        if (!val) { inp.classList.add('error'); err.classList.add('show'); return false; }
-        inp.classList.remove('error'); err.classList.remove('show');
-        return true;
-      }
-
-      // Input filled state persistence
-      document.querySelectorAll('.msf-input').forEach(function(inp) {
-        inp.addEventListener('input', function() {
-          if (this.value.trim().length > 0) { this.classList.add('filled'); }
-          else { this.classList.remove('filled'); }
-        });
-      });
-
-      document.getElementById('msf-wrapper').addEventListener('click', function(e) {
-        var btn = e.target;
-        if (btn.dataset.next) {
-          if (current > 0 && !validate(current)) return;
-          goTo(parseInt(btn.dataset.next));
-        }
-        if (btn.dataset.back) { goTo(parseInt(btn.dataset.back)); }
-      });
-
-      document.getElementById('msf-wrapper').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && current >= 1 && current <= 4) {
-          e.preventDefault();
-          if (validate(current)) goTo(current + 1);
-        }
-      });
-
-      document.getElementById('msf-submit').addEventListener('click', function() {
-        if (!validate(5)) return;
-        var btn = this;
-        var errEl = document.getElementById('msf-submit-error');
-        errEl.classList.remove('show');
-        btn.disabled = true;
-        btn.textContent = 'ENVIANDO...';
-
-        fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(formData)
-        })
-        .then(function() {
-          goTo(6);
-          btn.disabled = false;
-          btn.textContent = 'Quiero estar en la red →';
-        })
-        .catch(function() {
-          errEl.classList.add('show');
-          btn.disabled = false;
-          btn.textContent = 'Quiero estar en la red →';
-        });
-      });
     });
   </script>
 </body>
