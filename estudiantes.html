@@ -6,143 +6,402 @@
   <title>Novan — Para Estudiantes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --bg: #050505; --accent: #CC2936; --accent-hover: #E8303D; --muted-red: #6B1219; --text: #F5F0EB; --text-secondary: #888580; --border: #1a1a1a; --serif: 'Cormorant Garamond', serif; --sans: 'Inter', sans-serif; }
-    body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+    :root {
+      --bg: #0A0A0A;
+      --accent: #CC2936;
+      --accent-hover: #E8303D;
+      --muted-red: #6B1219;
+      --text: #F5F0EB;
+      --text-secondary: #888580;
+      --border: #1a1a1a;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
-    .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
+    
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* NAVBAR */
-    .navbar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; z-index: 100; transition: 0.4s; }
-    .navbar.scrolled { background: rgba(5,5,5,0.95); border-bottom: 1px solid #1A1A1A; }
-    .logo { font-family: var(--serif); font-weight: 700; font-size: 28px; text-decoration: none; color: var(--text); }
-    .logo span { color: var(--accent); }
+    
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 24px;
+      z-index: 100;
+      transition: all 0.4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(5, 5, 5, 0.95);
+      border-bottom: 1px solid #1A1A1A;
+      padding: 18px 24px;
+    }
+    .logo-wrapper {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .logo {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 28px;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .logo-n { color: var(--accent); }
+    .logo-rest { color: var(--text); }
     .nav-links { display: flex; gap: 32px; }
-    .nav-links a { font-size: 13px; color: #888580; text-decoration: none; }
-    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .menu-toggle span { display: block; width: 20px; height: 1px; background: #888580; margin: 4px 0; }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: #888580;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #F5F0EB; }
 
-    /* HERO */
-    .hero { min-height: 80vh; display: flex; align-items: center; padding-top: 100px; position: relative; }
-    .hero-content { max-width: 800px; z-index: 2; }
-    .eyebrow { color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 24px; }
-    .hero h1 { font-family: var(--serif); font-size: 72px; font-weight: 600; line-height: 1.1; margin-bottom: 24px; }
-    .hero p { font-size: 18px; color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 40px; }
-    .btn-cta { background: var(--accent); color: #fff; padding: 16px 32px; text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background-image: url("https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1920&q=80");
+      background-size: cover;
+      background-position: center;
+      background-attachment: scroll;
+      overflow: hidden;
+    }
+    /* Gradient overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(5,5,5,0.90) 40%, rgba(5,5,5,0.60) 100%);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      width: 100%;
+      text-align: left;
+    }
+    .hero-bg-text {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(160px, 18vw, 280px);
+      color: rgba(255,255,255,0.07);
+      letter-spacing: -2px;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+    }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); margin-bottom: 24px; font-weight: 500; }
+    .hero h1 { font-family: var(--serif); font-weight: 600; font-size: 42px; line-height: 1.1; color: var(--text); margin-bottom: 24px; }
+    .hero p { font-size: 16px; color: var(--text-secondary); max-width: 500px; line-height: 1.6; margin-bottom: 32px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn-cta { 
+      background: var(--accent); color: #fff; border: none; padding: 16px 36px; 
+      font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 2px; cursor: pointer; transition: background 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-cta:hover { background: var(--accent-hover); }
+    .btn-secondary { 
+      background: transparent; color: var(--text-secondary); border: 1px solid var(--text-secondary); padding: 16px 36px;
+      font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 2px; cursor: pointer; transition: all 0.3s; text-decoration: none;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--text); }
 
-    /* PROBLEMA */
-    .problema { padding: 100px 0; background: #0a0a0a; }
-    .stat-num { font-family: var(--serif); font-weight: 700; font-size: 96px; color: #F5F0EB; line-height: 1; }
-    .stat-phrase { font-size: 22px; font-weight: 300; margin: 24px 0; }
-    .stat-desc { font-size: 16px; color: #6B7280; max-width: 600px; line-height: 1.8; }
+    /* Problema */
+    .problema { padding: 64px 0; border-top: 1px solid var(--border); }
+    .stat { font-family: var(--serif); font-weight: 700; font-size: 58px; color: var(--text); line-height: 1; }
+    .stat-sub { font-size: 18px; font-weight: 300; color: var(--text); margin-top: 12px; }
+    .reasons-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 48px; }
+    .reason { font-size: 14px; color: var(--text-secondary); }
 
-    /* COMO FUNCIONA */
-    .how { padding: 100px 0; border-top: 1px solid var(--border); }
-    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 64px; }
+    /* How it works */
+    .how { padding: 64px 0; border-top: 1px solid var(--border); }
+    .how h2 { font-family: var(--serif); font-weight: 700; font-size: 32px; margin-bottom: 64px; }
+    .how-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
     .step-num { font-family: var(--serif); font-weight: 700; font-size: 88px; color: var(--muted-red); line-height: 1; }
-    .step-title { font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
-    .step-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 16px; }
+    .step-desc { font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.7; }
 
-    /* FOOTER */
-    .footer { padding: 64px 0; text-align: center; border-top: 1px solid var(--border); }
+    /* Differentiators */
+    .diffs { padding: 64px 0; border-top: 1px solid var(--border); }
+    .diffs-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+    .diff-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text); }
+    .diff-text { font-size: 14px; color: var(--text-secondary); margin-top: 12px; line-height: 1.7; }
 
-    @media (max-width: 768px) {
-      .navbar { padding: 16px 20px; }
-      .menu-toggle { display: block; }
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #0A0A0A; }
-      .nav-links.active { display: flex; }
-      .nav-links a { padding: 16px 20px; border-bottom: 1px solid #1A1A1A; }
-      .hero { padding: 100px 20px 60px; }
-      .hero h1 { font-size: 38px; }
-      .problema { padding: 64px 20px; }
-      .stat-num { font-size: 56px; }
-      .stat-phrase { font-size: 17px; }
-      .stat-desc { font-size: 14px; }
-      .how-grid { grid-template-columns: 1fr; gap: 48px; }
-      .step-num { font-size: 64px; }
+    /* Form Section */
+    .aplicar-section { background: #0d0505; border-top: 2px solid var(--accent); padding: 80px 0; }
+    .form-header { margin-bottom: 48px; }
+    .form-header h2 { font-family: var(--serif); font-weight: 700; font-size: 36px; line-height: 1.1; margin-bottom: 16px; }
+    
+    .search-group { margin-bottom: 32px; }
+    .search-input { 
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
+      padding: 12px 0; font-family: var(--sans); font-size: 22px; color: var(--text);
+      outline: none; transition: border-color 150ms ease;
+    }
+    .search-input:focus { border-bottom-color: var(--accent); }
+    .search-input::placeholder { color: #555; }
+    
+    .btn-search { 
+      width: 100%; background: var(--accent); color: #fff; border: none; padding: 18px;
+      font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 2px; cursor: pointer; transition: background 0.3s;
+    }
+    .btn-search:hover { background: var(--accent-hover); }
+    
+    .search-msg { font-size: 15px; color: var(--text-secondary); margin-top: 24px; display: none; }
+    .email-followup { display: none; margin-top: 24px; }
+    .email-followup .form-input { 
+      width: 100%; background: transparent; border: none; border-bottom: 1px solid #333;
+      padding: 12px 0; font-family: var(--sans); font-size: 18px; color: var(--text);
+      outline: none; margin-bottom: 24px;
+    }
+    .email-followup .btn-cta { width: 100%; }
+    
+    .form-success { display: none; margin-top: 24px; text-align: center; }
+    .form-success h3 { font-family: var(--serif); font-weight: 700; font-size: 36px; margin-bottom: 16px; }
+    .form-footer-note { font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 24px; }
+
+    /* Footer */
+    .footer { background: #050505; padding: 48px 0; border-top: 1px solid var(--border); text-align: center; }
+    .footer-logo { font-family: var(--serif); font-weight: 700; font-size: 22px; text-decoration: none; color: var(--text); }
+    .footer-logo span { color: var(--accent); }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin: 24px 0 16px; }
+    .footer-links a { font-size: 12px; color: var(--text-secondary); text-decoration: none; }
+    .footer-copy { font-size: 11px; color: #333; }
+
+    @media (min-width: 768px) {
+      .hero h1 { font-size: 72px; }
+      .hero-content { text-align: left; }
+      .hero { align-items: center; }
+      .problema { padding: 100px 0; }
+      .stat { font-size: 96px; }
+      .stat-sub { font-size: 22px; }
+      .reasons-grid { grid-template-columns: repeat(3, 1fr); margin-top: 48px; }
+      .how { padding: 100px 0; }
+      .how h2 { font-size: 48px; }
+      .how-grid { grid-template-columns: repeat(3, 1fr); }
+      .diffs { padding: 100px 0; }
+      .diffs-grid { grid-template-columns: repeat(3, 1fr); }
+      .aplicar-section { padding: 120px 0; }
+      .form-header h2 { font-size: 56px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <a href="index.html" class="logo"><span>N</span>ovan</a>
-    <button class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="nav-links">
-      <a href="estudiantes.html">Estudiantes</a>
-      <a href="profesionales.html">Profesionales</a>
+    <a href="index.html" class="logo-wrapper">
+      <span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="estudiantes.html">Para estudiantes</a>
+      <a href="profesionales.html">Para profesionales</a>
     </div>
   </nav>
 
   <section class="hero">
+    <div class="hero-bg-text">NOVAN</div>
     <div class="container">
       <div class="hero-content reveal">
         <p class="eyebrow">UNA DECISIÓN IMPORTANTE REQUIERE UNA CONVERSACIÓN REAL</p>
-        <h1>¿Estás eligiendo carrera sin saber cómo es realmente?</h1>
-        <p>Reuniones de 30 minutos con profesionales que te cuentan la verdad en primera persona.</p>
-        <a href="#aplicar" class="btn-cta">QUIERO ORIENTACIÓN →</a>
+        <h1 style="font-weight: 600;">¿Estás eligiendo carrera sin saber cómo es realmente?</h1>
+        <p>Reuniones virtuales de menos de 30 minutos con profesionales que te cuentan la verdad de tu carrera en primera persona.</p>
+        <div class="hero-ctas">
+          <a href="#form-estudiantes" class="btn-cta">QUIERO RECIBIR ORIENTACIÓN →</a>
+          <a href="#form-estudiantes" class="btn-secondary">Ver carreras disponibles</a>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="problema">
-    <div class="container reveal">
-      <p class="stat-num">1 de cada 4</p>
-      <p class="stat-phrase">estudiantes universitarios cambia de carrera. Y el 73% nunca llega a terminarla.</p>
-      <p class="stat-desc">En Argentina, la falta de información real antes de elegir provoca deserciones masivas. No es falta de capacidad, es falta de contexto.</p>
+    <div class="container">
+      <div class="reveal">
+        <p style="font-family: var(--serif); font-weight: 700; font-size: clamp(64px, 10vw, 96px); color: #F5F0EB; line-height: 1; margin-bottom: 24px;">1 de cada 4</p>
+        <p style="font-family: var(--sans); font-weight: 300; font-size: clamp(18px, 3vw, 22px); color: #F5F0EB; line-height: 1.4; max-width: 700px;">estudiantes universitarios cambia de carrera. Y el 73% nunca llega a terminarla.</p>
+        <p style="font-family: var(--sans); font-size: 16px; color: #6B7280; max-width: 600px; margin-top: 32px; line-height: 1.8;">En Argentina, casi uno de cada cuatro estudiantes cambia de carrera durante su trayectoria. La tasa de abandono definitivo supera el 70%. No es falta de inteligencia ni de esfuerzo — es falta de información real antes de elegir.</p>
+      </div>
     </div>
   </section>
 
   <section class="how">
     <div class="container">
-      <p class="eyebrow">CÓMO FUNCIONA</p>
+      <p class="eyebrow reveal">CÓMO FUNCIONA</p>
+      <h2 class="reveal">Tres pasos. Treinta minutos.<br>Una decisión mejor.</h2>
       <div class="how-grid">
-        <div class="reveal">
-          <p class="step-num">01</p>
-          <p class="step-title">Elegís al profesional</p>
-          <p class="step-desc">Filtrás por carrera y experiencia. Vos elegís con quién hablar.</p>
+        <div class="how-step reveal">
+          <div class="step-num">01</div>
+          <p class="step-title">Elegís al profesional en base a tus criterios</p>
+          <p class="step-desc">Filtrás por carrera, años de experiencia y disponibilidad. Vos elegís con quién hablar.</p>
         </div>
-        <div class="reveal">
-          <p class="step-num">02</p>
-          <p class="step-title">Reservás 30 min</p>
-          <p class="step-desc">Coordinás la videollamada sin intermediarios. Una charla directa.</p>
+        <div class="how-step reveal delay-1">
+          <div class="step-num">02</div>
+          <p class="step-title">Reservás 30 minutos</p>
+          <p class="step-desc">Coordinás la videollamada. Sin intermediarios. Sin filtros. Una conversación directa.</p>
         </div>
-        <div class="reveal">
-          <p class="step-num">03</p>
-          <p class="step-title">Tomás tu decisión</p>
-          <p class="step-desc">Salís con información real que ningún orientador clásico te da.</p>
+        <div class="step reveal delay-2">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Tomás tu decisión con información de primera mano</h3>
+          <p class="step-desc">Salís de la llamada sabiendo más de lo que cualquier orientador vocacional clásico informa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diffs">
+    <div class="container">
+      <div class="diffs-grid">
+        <div class="diff-item reveal">
+          <p class="diff-title">SIN INTELIGENCIA ARTIFICIAL</p>
+          <p class="diff-text">Hablás con una persona. No con un chatbot entrenado para sonar humano.</p>
+        </div>
+        <div class="diff-item reveal delay-1">
+          <p class="diff-title">PROFESIONALES DE 1 A 5 AÑOS DE RECIBIDOS</p>
+          <p class="diff-text">Tienen memoria fresca. Te cuentan lo que nadie te dice antes de elegir.</p>
+        </div>
+        <div class="diff-item reveal delay-2">
+          <p class="diff-title">30 MINUTOS QUE CAMBIAN UNA DECISIÓN</p>
+          <p class="diff-text">No es una consulta académica. Es una conversación honesta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aplicar-section" id="form-estudiantes">
+    <div class="container">
+      <div class="reveal">
+        <div class="form-header">
+          <p class="eyebrow">ENCONTRÁ TU PROFESIONAL</p>
+          <h2>¿Con qué carrera querés empezar?</h2>
+        </div>
+
+        <div id="search-content">
+          <div class="search-group">
+            <input type="text" id="search-input" class="search-input" placeholder="Ej: Medicina, Arquitectura, Derecho...">
+          </div>
+          <button class="btn-search" id="search-btn">BUSCAR PROFESIONALES →</button>
+          
+          <p class="search-msg" id="search-msg">Estamos cargando los primeros profesionales. Dejanos tu mail y te avisamos.</p>
+          
+          <div class="email-followup" id="email-followup">
+            <input type="email" id="email-input" class="form-input" placeholder="tu@mail.com">
+            <button class="btn-cta" id="notify-btn">AVISAME →</button>
+          </div>
+
+          <div class="form-success" id="success-msg">
+            <h3>Listo.</h3>
+          </div>
+          
+          <p class="form-footer-note">Si tu carrera no está, la agregamos. Escribinos.</p>
         </div>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <a href="index.html" class="logo"><span>N</span>ovan</a>
-    <p style="font-size: 12px; color: #444; margin-top: 24px;">© 2026 Novan. Todos los derechos reservados.</p>
+    <div class="container">
+      <a href="#" class="logo-wrapper" style="justify-content: center; margin-bottom: 24px;">
+        <span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span>
+      </a>
+      <div class="footer-links">
+        <a href="#">Instagram →</a>
+        <a href="#">TikTok →</a>
+      </div>
+      <p class="footer-copy">© 2026 Novan. Buenos Aires.</p>
+    </div>
   </footer>
 
   <script>
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQmdipFykqZJ60qOzZ-NbOLYTc4_O57gc8z36i5oWAi-RLlkUAPNaKCHnVgkaf7kPr/exec';
+
     document.addEventListener('DOMContentLoaded', function() {
+      // Navbar scroll effect
       var navbar = document.getElementById('navbar');
       window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
+        if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
+        else { navbar.classList.remove('scrolled'); }
       });
-      var menuToggle = document.getElementById('menu-toggle');
-      var navLinks = document.getElementById('nav-links');
-      menuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        navbar.classList.toggle('menu-open');
-      });
+
+      // Reveal animations
       var revealEls = document.querySelectorAll('.reveal');
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
-          if (e.isIntersecting) e.target.classList.add('visible');
+          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
         });
-      }, { threshold: 0.1 });
+      }, { threshold: 0.15 });
       revealEls.forEach(function(el) { observer.observe(el); });
+
+      // Flow logic
+      var searchBtn = document.getElementById('search-btn');
+      var searchInput = document.getElementById('search-input');
+      var searchMsg = document.getElementById('search-msg');
+      var emailFollowup = document.getElementById('email-followup');
+      var notifyBtn = document.getElementById('notify-btn');
+      var success = document.getElementById('success-msg');
+
+      searchBtn.addEventListener('click', function() {
+        if (!searchInput.value.trim()) return;
+        searchBtn.style.display = 'none';
+        searchInput.disabled = true;
+        searchMsg.style.display = 'block';
+        emailFollowup.style.display = 'block';
+      });
+
+      notifyBtn.addEventListener('click', function() {
+        var email = document.getElementById('email-input').value;
+        if (!email) return;
+        notifyBtn.disabled = true;
+        notifyBtn.textContent = 'ENVIANDO...';
+
+        var data = {
+          carrera: searchInput.value,
+          email: email,
+          pagina: 'estudiantes'
+        };
+
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data)
+        }).then(function() {
+          emailFollowup.style.display = 'none';
+          searchMsg.style.display = 'none';
+          success.style.display = 'block';
+        }).catch(function() {
+          alert('Error. Intentá de nuevo.');
+          notifyBtn.disabled = false;
+          notifyBtn.textContent = 'AVISAME →';
+        });
+      });
     });
   </script>
 </body>
