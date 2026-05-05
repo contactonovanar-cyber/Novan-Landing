@@ -1,51 +1,24 @@
-// =============================================
-// NOVAN — GOOGLE APPS SCRIPT BACKEND
-// =============================================
-// PASOS PARA DEPLOYAR:
-// 1. Ir a script.google.com > Nuevo proyecto > Pegar este código
-// 2. Reemplazar SHEET_ID con el ID de tu Google Sheet (está en la URL de la hoja)
-// 3. Clic en "Implementar" > "Nueva implementación"
-// 4. Tipo: "Aplicación web"
-// 5. Ejecutar como: "Yo"
-// 6. Quién tiene acceso: "Cualquiera"
-// 7. Copiar la URL del endpoint y reemplazar APPS_SCRIPT_URL en el JS de la landing
-// =============================================
-
-const SHEET_ID = 'REEMPLAZAR_CON_ID_DE_TU_SHEET';
-const SHEET_NAME = 'Aplicaciones';
-
 function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Aplicaciones");
+  if (!sheet) {
+    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Aplicaciones");
+    sheet.appendRow(["Fecha", "Nombre", "Carrera", "Antigüedad", "Contacto", "Email", "Página"]);
+  }
+  
   try {
-    const data = JSON.parse(e.postData.contents);
-    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp',
-        'Nombre',
-        'Carrera / Profesión',
-        'Años de experiencia',
-        'Contacto (IG / LinkedIn / WhatsApp)',
-        'Email'
-      ]);
-    }
-
+    var data = JSON.parse(e.postData.contents);
     sheet.appendRow([
-      new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
-      data.nombre || '',
-      data.carrera || '',
-      data.anios || '',
-      data.contacto || '',
-      data.email || ''
+      new Date(),
+      data.nombre || "",
+      data.carrera || "",
+      data.anios || "",
+      data.contacto || "",
+      data.email || "",
+      data.pagina || "index"
     ]);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
-
-  } catch(err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    
+    return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  } catch (err) {
+    return ContentService.createTextOutput("Error: " + err.message).setMimeType(ContentService.MimeType.TEXT);
   }
 }
