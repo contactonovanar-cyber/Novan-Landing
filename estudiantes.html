@@ -73,7 +73,9 @@
       transition: color 0.3s;
     }
     .nav-links a:hover { color: #F5F0EB; }
-
+    
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .menu-toggle span { display: block; width: 20px; height: 1px; background: #888580; margin: 4px 0; }
     /* Hero */
     .hero {
       position: relative;
@@ -132,14 +134,12 @@
       border-radius: 2px; cursor: pointer; transition: all 0.3s; text-decoration: none;
     }
     .btn-secondary:hover { color: var(--text); border-color: var(--text); }
-
     /* Problema */
     .problema { padding: 64px 0; border-top: 1px solid var(--border); }
     .stat { font-family: var(--serif); font-weight: 700; font-size: 58px; color: var(--text); line-height: 1; }
     .stat-sub { font-size: 18px; font-weight: 300; color: var(--text); margin-top: 12px; }
     .reasons-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 48px; }
     .reason { font-size: 14px; color: var(--text-secondary); }
-
     /* How it works */
     .how { padding: 64px 0; border-top: 1px solid var(--border); }
     .how h2 { font-family: var(--serif); font-weight: 700; font-size: 32px; margin-bottom: 64px; }
@@ -147,13 +147,11 @@
     .step-num { font-family: var(--serif); font-weight: 700; font-size: 88px; color: var(--muted-red); line-height: 1; }
     .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 16px; }
     .step-desc { font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.7; }
-
     /* Differentiators */
     .diffs { padding: 64px 0; border-top: 1px solid var(--border); }
     .diffs-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
     .diff-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text); }
     .diff-text { font-size: 14px; color: var(--text-secondary); margin-top: 12px; line-height: 1.7; }
-
     /* Form Section */
     .aplicar-section { background: #0d0505; border-top: 2px solid var(--accent); padding: 80px 0; }
     .form-header { margin-bottom: 48px; }
@@ -187,7 +185,6 @@
     .form-success { display: none; margin-top: 24px; text-align: center; }
     .form-success h3 { font-family: var(--serif); font-weight: 700; font-size: 36px; margin-bottom: 16px; }
     .form-footer-note { font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 24px; }
-
     /* Footer */
     .footer { background: #050505; padding: 48px 0; border-top: 1px solid var(--border); text-align: center; }
     .footer-logo { font-family: var(--serif); font-weight: 700; font-size: 22px; text-decoration: none; color: var(--text); }
@@ -195,7 +192,7 @@
     .footer-links { display: flex; justify-content: center; gap: 24px; margin: 24px 0 16px; }
     .footer-links a { font-size: 12px; color: var(--text-secondary); text-decoration: none; }
     .footer-copy { font-size: 11px; color: #333; }
-
+    /* ===== DESKTOP (768px+) ===== */
     @media (min-width: 768px) {
       .hero h1 { font-size: 72px; }
       .hero-content { text-align: left; }
@@ -212,21 +209,138 @@
       .aplicar-section { padding: 120px 0; }
       .form-header h2 { font-size: 56px; }
     }
+    /* ===== MOBILE (max-width 768px) ===== */
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 20px; }
+      .navbar.menu-open { background: #0A0A0A; border-bottom: 1px solid #1A1A1A; }
+      .logo { font-size: 20px; }
+      .menu-toggle { display: block; }
+      .nav-links { 
+        display: none; 
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0;
+        background: #0A0A0A; padding: 0;
+        border-top: 1px solid #1A1A1A;
+      }
+      .nav-links.active { display: flex; }
+      .nav-links a { 
+        padding: 16px 20px; border-bottom: 1px solid #1A1A1A; 
+        font-size: 11px; width: 100%; color: #888580;
+      }
+      .hero { padding: 100px 20px 60px; align-items: flex-start; min-height: auto; }
+      .hero .eyebrow { font-size: 9px; letter-spacing: 1.5px; margin-bottom: 16px; max-width: 100%; word-break: normal; }
+      .hero h1 { font-size: 38px; line-height: 1.05; }
+      .hero p { font-size: 15px; margin-top: 16px; }
+      .hero-ctas { display: block; width: 100%; margin-top: 32px; }
+      .btn-cta, .btn-secondary { width: 100%; display: block; text-align: center; font-size: 11px; letter-spacing: 1px; padding: 14px 20px; margin-bottom: 12px; }
+      .hero-bg-text { font-size: 120px; bottom: -10px; }
+      .problema { padding: 64px 20px; }
+      .problema [style*="font-size: clamp(64px"] { font-size: 56px !important; }
+      .problema [style*="font-size: clamp(18px"] { font-size: 17px !important; }
+      .problema [style*="font-size: 16px"] { font-size: 14px !important; }
+      .how { padding: 64px 20px; }
+      .how h2 { font-size: 28px; margin-bottom: 48px; }
+      .how-grid { grid-template-columns: 1fr; gap: 48px; }
+      .step-num { font-size: 64px; }
+      .diffs { padding: 64px 20px; }
+      .diffs-grid { grid-template-columns: 1fr; gap: 48px; }
+      .diff-item { padding-bottom: 48px; border-bottom: 1px solid #1A1A1A; }
+      .diff-item:last-child { border-bottom: none; padding-bottom: 0; }
+      .aplicar-section { padding: 80px 20px; }
+      .form-header h2 { font-size: 34px; }
+      .btn-search, .btn-cta { width: 100%; }
+      .footer { padding: 48px 20px; }
+      .footer-links { flex-direction: column; gap: 24px; font-size: 13px; }
+    }
+    @media (max-width: 768px) {
+      /* NAVBAR */
+      nav, header { padding: 16px 20px !important; }
+      .nav-links { display: none !important; }
+      .hamburger { display: flex !important; }
+      /* HERO */
+      .hero, section:first-of-type {
+        padding-top: 100px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        min-height: 100vh;
+      }
+      /* EYEBROW */
+      .eyebrow, [class*="eyebrow"] {
+        font-size: 9px !important;
+        letter-spacing: 1.5px !important;
+        max-width: 100% !important;
+        margin-bottom: 16px !important;
+      }
+      /* HEADLINES */
+      h1 { font-size: 38px !important; line-height: 1.05 !important; }
+      h2 { font-size: 28px !important; line-height: 1.1 !important; }
+      h3 { font-size: 22px !important; }
+      /* STAT GRANDE */
+      .stat, [class*="stat"] { font-size: 56px !important; line-height: 1 !important; }
+      /* NÚMEROS DE PASOS 01 02 03 */
+      .step-number, [class*="step-number"], .number {
+        font-size: 64px !important;
+        font-variant-numeric: normal !important;
+        font-feature-settings: normal !important;
+      }
+      /* SUBTÍTULOS Y BODY */
+      p { font-size: 15px !important; line-height: 1.6 !important; }
+      /* BOTONES */
+      .btn, button, a[class*="btn"] {
+        width: 100% !important;
+        display: block !important;
+        text-align: center !important;
+        font-size: 11px !important;
+        letter-spacing: 1px !important;
+        padding: 14px 20px !important;
+        margin-top: 12px !important;
+        box-sizing: border-box !important;
+      }
+      /* GRIDS — colapsar a columna única */
+      [class*="grid"], [class*="columns"], [class*="steps"], [class*="cols"] {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
+      /* SECCIONES */
+      section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-top: 64px !important;
+        padding-bottom: 64px !important;
+      }
+      /* FORMULARIO MULTI-PASO */
+      .form-container, [class*="form"] {
+        padding: 40px 20px !important;
+      }
+      /* NOVAN DECORATIVO */
+      .decorative, [class*="decorative"], [class*="novan-bg"] {
+        font-size: 100px !important;
+      }
+      /* FOOTER */
+      footer {
+        text-align: center !important;
+        padding: 40px 20px !important;
+      }
+      footer > * {
+        margin-bottom: 20px !important;
+      }
+    }
   </style>
 </head>
 <body>
-
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="logo-wrapper">
       <span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span>
     </a>
-    <div class="nav-links">
+    <button class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="estudiantes.html">Para estudiantes</a>
       <a href="profesionales.html">Para profesionales</a>
     </div>
   </nav>
-
   <section class="hero">
     <div class="hero-bg-text">NOVAN</div>
     <div class="container">
@@ -241,7 +355,6 @@
       </div>
     </div>
   </section>
-
   <section class="problema">
     <div class="container">
       <div class="reveal">
@@ -251,7 +364,6 @@
       </div>
     </div>
   </section>
-
   <section class="how">
     <div class="container">
       <p class="eyebrow reveal">CÓMO FUNCIONA</p>
@@ -275,7 +387,6 @@
       </div>
     </div>
   </section>
-
   <section class="diffs">
     <div class="container">
       <div class="diffs-grid">
@@ -294,7 +405,6 @@
       </div>
     </div>
   </section>
-
   <section class="aplicar-section" id="form-estudiantes">
     <div class="container">
       <div class="reveal">
@@ -302,7 +412,6 @@
           <p class="eyebrow">ENCONTRÁ TU PROFESIONAL</p>
           <h2>¿Con qué carrera querés empezar?</h2>
         </div>
-
         <div id="search-content">
           <div class="search-group">
             <input type="text" id="search-input" class="search-input" placeholder="Ej: Medicina, Arquitectura, Derecho...">
@@ -315,7 +424,6 @@
             <input type="email" id="email-input" class="form-input" placeholder="tu@mail.com">
             <button class="btn-cta" id="notify-btn">AVISAME →</button>
           </div>
-
           <div class="form-success" id="success-msg">
             <h3>Listo.</h3>
           </div>
@@ -325,7 +433,6 @@
       </div>
     </div>
   </section>
-
   <footer class="footer">
     <div class="container">
       <a href="#" class="logo-wrapper" style="justify-content: center; margin-bottom: 24px;">
@@ -338,18 +445,21 @@
       <p class="footer-copy">© 2026 Novan. Buenos Aires.</p>
     </div>
   </footer>
-
   <script>
     var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQmdipFykqZJ60qOzZ-NbOLYTc4_O57gc8z36i5oWAi-RLlkUAPNaKCHnVgkaf7kPr/exec';
-
     document.addEventListener('DOMContentLoaded', function() {
-      // Navbar scroll effect
+      // --- Navbar scroll & Mobile menu ---
       var navbar = document.getElementById('navbar');
       window.addEventListener('scroll', function() {
         if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
         else { navbar.classList.remove('scrolled'); }
       });
-
+      var menuToggle = document.getElementById('menu-toggle');
+      var navLinks = document.getElementById('nav-links');
+      menuToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        navbar.classList.toggle('menu-open');
+      });
       // Reveal animations
       var revealEls = document.querySelectorAll('.reveal');
       var observer = new IntersectionObserver(function(entries) {
@@ -358,7 +468,6 @@
         });
       }, { threshold: 0.15 });
       revealEls.forEach(function(el) { observer.observe(el); });
-
       // Flow logic
       var searchBtn = document.getElementById('search-btn');
       var searchInput = document.getElementById('search-input');
@@ -366,7 +475,6 @@
       var emailFollowup = document.getElementById('email-followup');
       var notifyBtn = document.getElementById('notify-btn');
       var success = document.getElementById('success-msg');
-
       searchBtn.addEventListener('click', function() {
         if (!searchInput.value.trim()) return;
         searchBtn.style.display = 'none';
@@ -374,19 +482,16 @@
         searchMsg.style.display = 'block';
         emailFollowup.style.display = 'block';
       });
-
       notifyBtn.addEventListener('click', function() {
         var email = document.getElementById('email-input').value;
         if (!email) return;
         notifyBtn.disabled = true;
         notifyBtn.textContent = 'ENVIANDO...';
-
         var data = {
           carrera: searchInput.value,
           email: email,
           pagina: 'estudiantes'
         };
-
         fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
