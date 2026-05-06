@@ -81,6 +81,7 @@
     
     .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
     .menu-toggle span { display: block; width: 20px; height: 1px; background: #888580; margin: 4px 0; }
+
     /* Hero */
     .hero {
       position: relative;
@@ -133,6 +134,7 @@
     }
     .btn-cta:hover { background: var(--accent-hover); }
     .trust-note { font-size: 12px; color: var(--text-secondary); margin-top: 12px; display: block; }
+
     /* Objections */
     .objections { padding: 64px 0; border-top: 1px solid var(--border); }
     .objections-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
@@ -140,6 +142,7 @@
     .objection-item:last-child { border-bottom: none; }
     .objection-q { font-size: 15px; font-weight: 600; color: var(--text); }
     .objection-a { font-size: 14px; color: var(--text-secondary); margin-top: 12px; line-height: 1.7; }
+
     /* How it works */
     .how { padding: 64px 0; border-top: 1px solid var(--border); }
     .how h2 { font-family: var(--serif); font-weight: 700; font-size: 32px; margin-bottom: 64px; line-height: 1.1; }
@@ -147,6 +150,7 @@
     .step-num { font-family: var(--serif); font-weight: 700; font-size: 80px; color: var(--muted-red); line-height: 1; }
     .step-title { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 16px; }
     .step-desc { font-size: 14px; color: var(--text-secondary); margin-top: 8px; line-height: 1.7; }
+
     /* ===== MULTI-STEP FORM ===== */
     .aplicar {
       background: #0d0505;
@@ -267,6 +271,7 @@
     .msf-confirm-link:hover { text-decoration: underline; }
     .msf-submit-error { font-size: 13px; color: var(--accent); margin-top: 12px; display: none; }
     .msf-submit-error.show { display: block; }
+
     /* Footer */
     .footer { background: #050505; padding: 48px 0; border-top: 1px solid var(--border); text-align: center; }
     .footer-logo { font-family: var(--serif); font-weight: 700; font-size: 22px; text-decoration: none; color: var(--text); }
@@ -274,6 +279,7 @@
     .footer-links { display: flex; justify-content: center; gap: 24px; margin: 24px 0 16px; }
     .footer-links a { font-size: 12px; color: var(--text-secondary); text-decoration: none; }
     .footer-copy { font-size: 11px; color: #333; }
+
     /* ===== DESKTOP (768px+) ===== */
     @media (min-width: 768px) {
       .hero h1 { font-size: 72px; }
@@ -291,6 +297,7 @@
       .msf-welcome-hl { font-size: 52px; }
       .msf-confirm-hl { font-size: 48px; }
     }
+
     /* ===== MOBILE (max-width 768px) ===== */
     @media (max-width: 768px) {
       .navbar { padding: 16px 20px; }
@@ -309,6 +316,7 @@
         padding: 16px 20px; border-bottom: 1px solid #1A1A1A; 
         font-size: 11px; width: 100%; color: #888580;
       }
+
       .hero { padding: 100px 20px 60px; align-items: flex-start; }
       .eyebrow { font-size: 9px; letter-spacing: 1.5px; margin-bottom: 16px; }
       .hero h1 { font-size: 38px; line-height: 1.05; }
@@ -316,26 +324,32 @@
       .btn-cta { width: 100%; display: block; text-align: center; font-size: 11px; letter-spacing: 1px; padding: 14px 20px; }
       .trust-note { font-size: 11px; text-align: center; display: block; margin-top: 16px; }
       .hero-bg-text { font-size: 120px; bottom: -10px; }
+
       .objections { padding: 64px 20px; }
       .objections-grid { grid-template-columns: 1fr; gap: 32px; }
       .objection-item { padding-bottom: 32px; border-bottom: 1px solid #1A1A1A; }
       .objection-item:last-child { border-bottom: none; }
+
       .how { padding: 64px 20px; }
       .how h2 { font-size: 28px; margin-bottom: 48px; }
       .how-grid { grid-template-columns: 1fr; gap: 48px; }
       .step-num { font-size: 64px; }
+
       .aplicar { padding: 80px 20px; }
       .aplicar-grid { grid-template-columns: 1fr; gap: 48px; }
       .aplicar-headline { font-size: 34px; }
       .msf-btn-next, .msf-btn-submit { width: 100%; }
+
       .footer { padding: 48px 20px; }
       .footer-links { flex-direction: column; gap: 24px; font-size: 13px; }
     }
+
     @media (max-width: 768px) {
       /* NAVBAR */
       nav, header { padding: 16px 20px !important; }
       .nav-links { display: none !important; }
       .hamburger { display: flex !important; }
+
       /* HERO */
       .hero, section:first-of-type {
         padding-top: 100px !important;
@@ -343,6 +357,7 @@
         padding-right: 20px !important;
         min-height: 100vh;
       }
+
       /* EYEBROW */
       .eyebrow, [class*="eyebrow"] {
         font-size: 9px !important;
@@ -350,20 +365,25 @@
         max-width: 100% !important;
         margin-bottom: 16px !important;
        }
+
       /* HEADLINES */
       h1 { font-size: 38px !important; line-height: 1.05 !important; }
       h2 { font-size: 28px !important; line-height: 1.1 !important; }
       h3 { font-size: 22px !important; }
+
       /* STAT GRANDE */
       .stat, [class*="stat"] { font-size: 56px !important; line-height: 1 !important; }
+
       /* NÚMEROS DE PASOS 01 02 03 */
       .step-number, [class*="step-number"], .number {
         font-size: 64px !important;
         font-variant-numeric: normal !important;
         font-feature-settings: normal !important;
       }
+
       /* SUBTÍTULOS Y BODY */
       p { font-size: 15px !important; line-height: 1.6 !important; }
+
       /* BOTONES */
       .btn, button, a[class*="btn"] {
         width: 100% !important;
@@ -375,11 +395,13 @@
         margin-top: 12px !important;
         box-sizing: border-box !important;
       }
+
       /* GRIDS — colapsar a columna única */
       [class*="grid"], [class*="columns"], [class*="steps"], [class*="cols"] {
         grid-template-columns: 1fr !important;
         gap: 40px !important;
       }
+
       /* SECCIONES */
       section {
         padding-left: 20px !important;
@@ -387,14 +409,17 @@
         padding-top: 64px !important;
         padding-bottom: 64px !important;
       }
+
       /* FORMULARIO MULTI-PASO */
       .form-container, [class*="form"] {
         padding: 40px 20px !important;
       }
+
       /* NOVAN DECORATIVO */
       .decorative, [class*="decorative"], [class*="novan-bg"] {
         font-size: 100px !important;
       }
+
       /* FOOTER */
       footer {
         text-align: center !important;
@@ -407,6 +432,7 @@
   </style>
 </head>
 <body>
+
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
     <a href="index.html" class="logo-wrapper">
@@ -420,6 +446,7 @@
       <a href="profesionales.html">Para profesionales</a>
     </div>
   </nav>
+
   <section class="hero">
     <div class="hero-bg-text">NOVAN</div>
     <div class="container">
@@ -432,6 +459,7 @@
       </div>
     </div>
   </section>
+
   <section class="objections">
     <div class="container">
       <p class="eyebrow reveal">LO QUE TODOS PREGUNTAN</p>
@@ -451,6 +479,7 @@
       </div>
     </div>
   </section>
+
   <section class="how">
     <div class="container">
       <p class="eyebrow reveal">CÓMO FUNCIONA</p>
@@ -474,6 +503,7 @@
       </div>
     </div>
   </section>
+
   <!-- FORMULARIO MULTI-PASO -->
   <section class="aplicar" id="aplicar">
     <div class="container">
@@ -487,10 +517,12 @@
             <li>30 minutos por consulta. Vos ponés tu disponibilidad.</li>
           </ul>
         </div>
+
         <div class="aplicar-form-container reveal">
           <div class="msf-trust-signal">INSCRIPCIÓN ABIERTA</div>
           <div class="msf-progress"><div class="msf-bar" id="msf-bar"></div></div>
           <div class="msf-wrapper" id="msf-wrapper">
+
             <!-- PASO 0: Bienvenida -->
             <div class="msf-step msf-centered active" data-step="0">
               <p class="msf-label">PARA PROFESIONALES</p>
@@ -498,6 +530,7 @@
               <p class="msf-welcome-desc">Solo aceptamos profesionales que ya lo vivieron.</p>
               <div class="msf-nav"><button class="msf-btn-next" data-next="1">EMPEZAR →</button></div>
             </div>
+
             <!-- PASO 1: Nombre -->
             <div class="msf-step" data-step="1">
               <p class="msf-label">01 / 05</p>
@@ -506,6 +539,7 @@
               <p class="msf-error" id="err-nombre">Necesitamos tu nombre para continuar.</p>
               <div class="msf-nav"><button class="msf-btn-next" data-next="2">SIGUIENTE →</button></div>
             </div>
+
             <!-- PASO 2: Carrera -->
             <div class="msf-step" data-step="2">
               <p class="msf-label">02 / 05</p>
@@ -517,6 +551,7 @@
                 <button class="msf-btn-next" data-next="3">SIGUIENTE →</button>
               </div>
             </div>
+
             <!-- PASO 3: Antigüedad -->
             <div class="msf-step" data-step="3">
               <p class="msf-label">03 / 05</p>
@@ -528,6 +563,7 @@
                 <button class="msf-btn-next" data-next="4">SIGUIENTE →</button>
               </div>
             </div>
+
             <!-- PASO 4: Contacto -->
             <div class="msf-step" data-step="4">
               <p class="msf-label">04 / 05</p>
@@ -540,6 +576,7 @@
                 <button class="msf-btn-next" data-next="5">SIGUIENTE →</button>
               </div>
             </div>
+
             <!-- PASO 5: Email -->
             <div class="msf-step" data-step="5">
               <p class="msf-label">05 / 05</p>
@@ -552,6 +589,7 @@
               </div>
               <p class="msf-submit-error" id="msf-submit-error">Algo salió mal. Intentá de nuevo o escribinos a hola@novan.ar</p>
             </div>
+
             <!-- PASO 6: Confirmación -->
             <div class="msf-step msf-centered" data-step="6">
               <div class="msf-confirm-line"></div>
@@ -560,11 +598,13 @@
               <p class="msf-confirm-small">Mientras tanto, seguinos en Instagram.</p>
               <a href="#" class="msf-confirm-link">→ @novan.ar</a>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
+
   <footer class="footer">
     <div class="container">
       <a href="#" class="logo-wrapper" style="justify-content: center; margin-bottom: 24px;">
@@ -577,8 +617,10 @@
       <p class="footer-copy">© 2026 Novan. Buenos Aires.</p>
     </div>
   </footer>
+
   <script>
-    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQmdipFykqZJ60qOzZ-NbOLYTc4_O57gc8z36i5oWAi-RLlkUAPNaKCHnVgkaf7kPr/exec';
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUG16lp5e47xP5l4acG7qoA3yzIzcwd18rp-d6pShWjtrsAHywu28NCp5cqVc4angj/exec';
+
     document.addEventListener('DOMContentLoaded', function() {
       // --- Navbar scroll & Mobile menu ---
       var navbar = document.getElementById('navbar');
@@ -586,12 +628,14 @@
         if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
         else { navbar.classList.remove('scrolled'); }
       });
+
       var menuToggle = document.getElementById('menu-toggle');
       var navLinks = document.getElementById('nav-links');
       menuToggle.addEventListener('click', function() {
         navLinks.classList.toggle('active');
         navbar.classList.toggle('menu-open');
       });
+
       // Reveal animations
       var revealEls = document.querySelectorAll('.reveal');
       var observer = new IntersectionObserver(function(entries) {
@@ -600,6 +644,7 @@
         });
       }, { threshold: 0.15 });
       revealEls.forEach(function(el) { observer.observe(el); });
+
       // --- Multi-step form ---
       var current = 0;
       var progressPcts = [0, 20, 40, 60, 80, 95, 100];
@@ -613,7 +658,9 @@
         4: { input: 'msf-contacto', error: 'err-contacto', key: 'contacto' },
         5: { input: 'msf-email', error: 'err-email', key: 'email' }
       };
+
       function updateBar() { bar.style.width = progressPcts[current] + '%'; }
+
       function goTo(target) {
         if (target === current) return;
         var fwd = target > current;
@@ -630,6 +677,7 @@
           if (f) { var inp = document.getElementById(f.input); if (inp) inp.focus(); }
         }, 250);
       }
+
       function validate(step) {
         var f = fieldMap[step];
         if (!f) return true;
@@ -645,6 +693,7 @@
         inp.classList.remove('error'); err.classList.remove('show');
         return true;
       }
+
       // Input filled state persistence
       document.querySelectorAll('.msf-input').forEach(function(inp) {
         inp.addEventListener('input', function() {
@@ -652,6 +701,7 @@
           else { this.classList.remove('filled'); }
         });
       });
+
       document.getElementById('msf-wrapper').addEventListener('click', function(e) {
         var btn = e.target;
         if (btn.dataset.next) {
@@ -660,12 +710,14 @@
         }
         if (btn.dataset.back) { goTo(parseInt(btn.dataset.back)); }
       });
+
       document.getElementById('msf-wrapper').addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && current >= 1 && current <= 4) {
           e.preventDefault();
           if (validate(current)) goTo(current + 1);
         }
       });
+
       document.getElementById('msf-submit').addEventListener('click', function() {
         if (!validate(5)) return;
         var btn = this;
@@ -673,6 +725,7 @@
         errEl.classList.remove('show');
         btn.disabled = true;
         btn.textContent = 'ENVIANDO...';
+
         fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
