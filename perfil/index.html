@@ -1087,22 +1087,18 @@
                 // 2. Captura con html2canvas
                 const canvas = await html2canvas(card, {
                     scale: 2.25,
-                    width: 480,
-                    height: 600,
+                    width: card.offsetWidth,
+                    height: card.scrollHeight,
+                    windowWidth: card.offsetWidth,
+                    windowHeight: card.scrollHeight,
                     backgroundColor: '#0A0A0A',
                     useCORS: true,
                     allowTaint: false,
                     logging: false
                 });
 
-                const finalCanvas = document.createElement('canvas');
-                finalCanvas.width = 1080;
-                finalCanvas.height = 1350;
-                const ctx = finalCanvas.getContext('2d');
-                ctx.drawImage(canvas, 0, 0, 1080, 1350);
-
                 // 3. Exportar PNG y descargar
-                const blob = await new Promise(resolve => finalCanvas.toBlob(resolve, 'image/png', 1.0));
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
                 const dataUrl = URL.createObjectURL(blob);
                 
                 const link = document.createElement('a');
