@@ -575,44 +575,79 @@
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             .navbar { padding: 16px 20px; }
+            .logo { font-size: 22px; }
             
             #state-edit {
-                grid-template-columns: 1fr;
-                gap: 48px;
+                display: block; /* No grid on mobile */
                 padding-top: 100px;
             }
 
             .preview-column {
-                order: 2;
-                position: relative;
-                top: 0;
+                display: none; /* Hide preview on mobile */
             }
 
-            .form-row { flex-direction: column; gap: 0; }
+            .form-row { 
+                flex-direction: column; 
+                gap: 0; 
+            }
 
+            input, textarea, select {
+                font-size: 16px;
+                padding: 14px 0;
+            }
+
+            .btn-generate {
+                padding: 18px;
+                font-size: 13px;
+            }
+
+            /* --- FINAL CARD MOBILE --- */
             .final-card-wrapper {
                 width: 95%;
+                margin: auto;
                 flex-direction: column;
             }
 
-            .card-content { width: 100%; padding: 28px 20px; }
             .card-bg-strip { 
                 position: relative; 
                 width: 100%; 
-                height: 160px;
+                height: 180px;
                 order: -1;
             }
+            
             .card-bg-strip::before {
-                background: linear-gradient(to top, #0A0A0A 0%, transparent 100%);
+                background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%);
+            }
+
+            .card-content { 
+                width: 100%; 
+                padding: 24px; 
+            }
+
+            .final-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
             }
 
             .final-photo-circle {
-                margin-top: -36px;
-                margin-right: 0;
+                margin: 20px 0 0 0;
+                position: relative;
+                z-index: 10;
+            }
+
+            .final-data {
+                margin-top: 16px;
             }
 
             .final-name { font-size: 28px; }
             .experience-number { font-size: 40px; }
+            .final-price { font-size: 22px; }
+
+            .final-separator { margin: 16px 0; }
+            .experience-block { margin-top: 16px; }
+            .final-footer { margin-top: 16px; }
         }
     </style>
 </head>
