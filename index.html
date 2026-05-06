@@ -1,144 +1,989 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Novan — Hablá con alguien que ya lo vivió</title>
-  <meta name="description" content="Marketplace de orientación vocacional. Videollamadas de 30 minutos con profesionales reales.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #050505;
-      --accent: #CC2936;
-      --accent-hover: #E8303D;
-      --text: #F5F0EB;
-      --text-secondary: #888580;
-      --border: #1a1a1a;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Inter', -apple-system, sans-serif;
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Novan — Generá tu presentación</title>
+    <meta name="description" content="Editá tu tarjeta de presentación Novan para compartir en Instagram.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #0A0A0A;
+            --accent: #CC2936;
+            --accent-hover: #E8303D;
+            --text: #F5F0EB;
+            --text-secondary: #6B7280;
+            --border: #1A1A1A;
+            --serif: 'Cormorant Garamond', serif;
+            --sans: 'Inter', sans-serif;
+        }
 
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* NAVBAR */
-    .navbar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; z-index: 100; transition: all 0.4s ease; }
-    .navbar.scrolled { background: rgba(5, 5, 5, 0.95); border-bottom: 1px solid #1A1A1A; padding: 18px 48px; }
-    .logo-wrapper { display: flex; align-items: center; text-decoration: none; }
-    .logo { font-family: var(--serif); font-weight: 700; font-size: 28px; line-height: 1; }
-    .logo-n { color: var(--accent); }
-    .logo-rest { color: var(--text); }
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a { font-size: 13px; color: #888580; text-decoration: none; transition: color 0.3s; }
-    .nav-links a:hover { color: #F5F0EB; }
-    .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .menu-toggle span { display: block; width: 20px; height: 1px; background: #888580; margin: 4px 0; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
 
-    /* HERO */
-    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 0 48px; background-image: url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80"); background-size: cover; background-position: center; background-attachment: fixed; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(5,5,5,0.88) 40%, rgba(5,5,5,0.65) 100%); z-index: 0; }
-    .hero-content { position: relative; z-index: 2; max-width: 640px; text-align: left; }
-    .hero .eyebrow { color: var(--accent); margin-bottom: 24px; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; }
-    .hero h1 { font-family: var(--serif); font-weight: 700; font-size: 82px; line-height: 1.0; color: var(--text); }
-    .hero-sub { font-size: 17px; color: #888580; max-width: 500px; margin-top: 28px; line-height: 1.7; }
-    .hero-bg-text { position: absolute; bottom: -20px; right: -20px; font-family: var(--serif); font-weight: 700; font-size: 280px; color: rgba(255,255,255,0.07); letter-spacing: -2px; pointer-events: none; z-index: 1; }
-    .hero-ctas { display: flex; gap: 16px; margin-top: 52px; }
-    .btn-primary, .btn-secondary { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; padding: 16px 32px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; }
-    .btn-primary { background: var(--accent); color: #F5F0EB; border: 1px solid var(--accent); }
-    .btn-secondary { background: transparent; color: #888580; border: 1px solid #444; }
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 40px;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: #0A0A0A;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
+        }
+        .logo {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 26px;
+            text-decoration: none;
+            line-height: 1;
+        }
+        .logo-n { color: var(--accent); }
+        .logo-rest { color: var(--text); }
 
-    /* FOOTER */
-    .footer { background: var(--bg); border-top: 1px solid var(--border); padding: 64px 48px 32px; }
-    .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: center; }
-    .footer-links { display: flex; gap: 24px; justify-content: center; }
-    .footer-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
-    .footer-social { display: flex; gap: 20px; justify-content: flex-end; }
-    .footer-social a { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
-    .footer-copyright { text-align: center; font-size: 12px; color: #333; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    @media (max-width: 768px) {
-      .navbar { padding: 16px 20px; }
-      .navbar.menu-open { background: #0A0A0A; }
-      .logo { font-size: 20px; }
-      .menu-toggle { display: block; }
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: #0A0A0A; border-top: 1px solid #1A1A1A; }
-      .nav-links.active { display: flex; }
-      .nav-links a { padding: 16px 20px; border-bottom: 1px solid #1A1A1A; font-size: 11px; }
-      .hero { padding: 100px 20px 60px; background-attachment: scroll; }
-      .hero h1 { font-size: 38px; line-height: 1.05; }
-      .hero .eyebrow { font-size: 9px; letter-spacing: 1.5px; }
-      .hero-ctas { display: block; }
-      .btn-primary, .btn-secondary { width: 100%; text-align: center; margin-bottom: 12px; padding: 14px 20px; font-size: 11px; }
-      .hero-bg-text { font-size: 120px; bottom: -10px; }
-      .footer-grid { grid-template-columns: 1fr; text-align: center; }
-      .footer-links, .footer-social { justify-content: center; }
-    }
-  </style>
+        /* --- STATE 1: DASHBOARD --- */
+        #state-edit {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 64px;
+            align-items: start;
+            padding: 120px 24px 80px;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #state-edit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(5,5,5,0.88);
+            z-index: 0;
+        }
+
+        #state-edit > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- PREVIEW COLUMN --- */
+        .preview-column {
+            position: sticky;
+            top: 120px;
+        }
+
+        .preview-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .mini-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 32px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Photo/Initials Styles */
+        .photo-circle {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: none; /* Hidden until name or photo */
+        }
+
+        .photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-initials {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--text);
+        }
+
+        .mini-card-name {
+            font-family: var(--serif);
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .mini-card-career {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .mini-card-ig {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* --- FORM COLUMN --- */
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .form-title {
+            font-family: var(--serif);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .form-group.flex-2 { flex: 2; }
+
+        .form-label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            font-family: var(--sans);
+            font-size: 16px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 150ms ease;
+            border-radius: 0;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Currency dropdown styles */
+        .price-container {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .currency-selector {
+            width: 70px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+            padding-right: 20px;
+            cursor: pointer;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .char-counter {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Photo Button */
+        .photo-upload-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-photo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-photo:hover {
+            border-color: var(--accent);
+        }
+
+        .photo-thumb-container {
+            position: relative;
+            display: none;
+        }
+
+        .photo-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-remove-photo {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-hover);
+        }
+
+        /* --- STATE 2: FINAL CARD --- */
+        #state-final {
+            display: none;
+            opacity: 0;
+            padding: 120px 24px 80px;
+        }
+
+        .final-card-wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            background: #0A0A0A;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            border-radius: 2px;
+        }
+
+        .card-content {
+            width: 58%;
+            padding: 40px 36px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-bg-strip {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 42%;
+            z-index: 1;
+        }
+
+        .card-bg-strip img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .card-bg-strip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #0A0A0A 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .card-bg-strip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(204, 41, 54, 0.12);
+            z-index: 3;
+        }
+
+        .final-logo {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .final-verified {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+        }
+
+        /* Fallback Initials for Final Card */
+        .final-photo-circle {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+            position: relative;
+            z-index: 10;
+            margin-right: -20px; 
+            overflow: hidden;
+            display: none;
+        }
+
+        .final-photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .final-initials {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text);
+        }
+
+        .final-data {
+            margin-top: 20px;
+        }
+
+        .final-name {
+            font-family: var(--serif);
+            font-size: 32px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .final-age {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .final-career {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .final-work {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Experience Block */
+        .experience-block {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .experience-number {
+            font-family: var(--serif);
+            font-size: 52px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .experience-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .final-separator {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        .final-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            font-style: italic;
+            color: var(--text);
+        }
+
+        .final-price-section {
+            margin-top: 0;
+        }
+
+        .final-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .final-price {
+            font-family: var(--serif);
+            font-size: 26px;
+            color: var(--text);
+            margin-top: 4px;
+        }
+
+        .final-ig-section {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .final-ig-value {
+            font-size: 13px;
+            color: var(--accent);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .final-footer {
+            margin-top: 24px;
+        }
+
+        .footer-line {
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .footer-branding {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .final-actions {
+            max-width: 480px;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-edit {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--sans);
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            color: var(--text);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .navbar { padding: 16px 20px; }
+            
+            #state-edit {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                padding-top: 100px;
+            }
+
+            .preview-column {
+                order: 2;
+                position: relative;
+                top: 0;
+            }
+
+            .form-row { flex-direction: column; gap: 0; }
+
+            .final-card-wrapper {
+                width: 95%;
+                flex-direction: column;
+            }
+
+            .card-content { width: 100%; padding: 28px 20px; }
+            .card-bg-strip { 
+                position: relative; 
+                width: 100%; 
+                height: 160px;
+                order: -1;
+            }
+            .card-bg-strip::before {
+                background: linear-gradient(to top, #0A0A0A 0%, transparent 100%);
+            }
+
+            .final-photo-circle {
+                margin-top: -36px;
+                margin-right: 0;
+            }
+
+            .final-name { font-size: 28px; }
+            .experience-number { font-size: 40px; }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar" id="navbar">
-    <a href="#" class="logo-wrapper"><span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span></a>
-    <button class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></button>
-    <div class="nav-links" id="nav-links">
-      <a href="estudiantes.html">Para estudiantes</a>
-      <a href="profesionales.html">Para profesionales</a>
-    </div>
-  </nav>
 
-  <section class="hero">
-    <div class="hero-bg-text">NOVAN</div>
-    <div class="hero-content">
-      <p class="eyebrow reveal">UNA DECISIÓN IMPORTANTE REQUIERE UNA CONVERSACIÓN REAL</p>
-      <h1 class="reveal">Antes de elegir,<br>hablá con alguien<br>que ya lo vivió.</h1>
-      <p class="hero-sub reveal">Reuniones virtuales de menos de 30 minutos con profesionales que te cuentan la verdad de tu carrera en primera persona.</p>
-      <div class="hero-ctas reveal">
-        <a href="estudiantes.html" class="btn-primary">QUIERO ORIENTACIÓN →</a>
-        <a href="profesionales.html" class="btn-secondary">SOY PROFESIONAL →</a>
-      </div>
-    </div>
-  </section>
+    <nav class="navbar" id="navbar">
+        <a href="javascript:location.reload()" class="logo">
+            <span class="logo-n">N</span><span class="logo-rest">ovan</span>
+        </a>
+    </nav>
 
-  <footer class="footer">
-    <div class="footer-grid">
-      <a href="#" class="logo-wrapper"><span class="logo"><span class="logo-n">N</span><span class="logo-rest">ovan</span></span></a>
-      <div class="footer-links">
-        <a href="estudiantes.html">Estudiantes</a>
-        <a href="profesionales.html">Profesionales</a>
-      </div>
-      <div class="footer-social">
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-      </div>
-    </div>
-    <p class="footer-copyright">© 2026 Novan. Buenos Aires.</p>
-  </footer>
+    <div class="container">
+        
+        <!-- ESTADO 1: DASHBOARD DE EDICIÓN -->
+        <div id="state-edit">
+            
+            <!-- COLUMNA IZQUIERDA: PREVIEW -->
+            <div class="preview-column">
+                <p class="preview-title">PREVIEW EN TIEMPO REAL</p>
+                <div class="mini-card" id="mini-card">
+                    <div class="photo-circle" id="mini-circle">
+                        <span class="photo-initials" id="mini-initials"></span>
+                        <img src="" alt="" id="mini-img" style="display: none;">
+                    </div>
+                    <div class="mini-card-name" id="mini-name">Tu Nombre</div>
+                    <div class="mini-card-career" id="mini-career">CARRERA O ÁREA</div>
+                    <div class="mini-card-ig" id="mini-ig">@usuario</div>
+                </div>
+            </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
-      });
-      var menuToggle = document.getElementById('menu-toggle');
-      var navLinks = document.getElementById('nav-links');
-      menuToggle.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        navbar.classList.toggle('menu-open');
-      });
-      var revealEls = document.querySelectorAll('.reveal');
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            <!-- COLUMNA DERECHA: FORMULARIO -->
+            <div class="form-column">
+                <div class="form-header">
+                    <p class="eyebrow">TU TARJETA NOVAN</p>
+                    <h1 class="form-title">Editá tu presentación.</h1>
+                </div>
+
+                <form id="profile-form">
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label class="form-label">Nombre completo</label>
+                            <input type="text" id="input-name" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Edad (opcional)</label>
+                            <input type="number" id="input-age" placeholder="Tu edad">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Años de exp. (opcional)</label>
+                            <input type="number" id="input-exp" placeholder="Ej: 3" min="0" max="50">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Carrera o área</label>
+                        <input type="text" id="input-career" placeholder="Ej: Abogada, Diseñador, Médico" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dónde trabajás o qué hacés</label>
+                        <input type="text" id="input-work" placeholder="Ej: Estudio jurídico / Freelance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">¿Por qué hablar con vos?</label>
+                        <textarea id="input-desc" placeholder="Contá qué puede aprender un estudiante hablando con vos" maxlength="180" required></textarea>
+                        <div id="desc-counter" class="char-counter">0 / 180</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Precio de la sesión (30 min)</label>
+                            <div class="price-container">
+                                <select id="input-currency" class="currency-selector">
+                                    <option value="$">$</option>
+                                    <option value="USD">USD</option>
+                                    <option value="€">€</option>
+                                </select>
+                                <input type="text" id="input-price" placeholder="Ej: 5.000" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Instagram (opcional)</label>
+                            <input type="text" id="input-ig" placeholder="@tuusuario">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Foto de perfil</label>
+                        <div class="photo-upload-container">
+                            <label for="input-photo" class="btn-photo">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                Subir foto
+                            </label>
+                            <input type="file" id="input-photo" accept="image/*" style="display: none;">
+                            <div class="photo-thumb-container" id="thumb-container">
+                                <img src="" alt="" class="photo-thumb" id="photo-thumb">
+                                <button type="button" class="btn-remove-photo" id="btn-remove-photo">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-generate">GENERAR MI TARJETA →</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ESTADO 2: TARJETA FINAL -->
+        <div id="state-final">
+            <div class="final-card-wrapper" id="card-to-capture">
+                
+                <div class="card-bg-strip">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80" alt="Fondo">
+                </div>
+
+                <div class="card-content">
+                    <div class="final-header">
+                        <div class="logo final-logo">
+                            <span class="logo-n">N</span><span class="logo-rest">ovan</span>
+                        </div>
+                        <div class="final-verified">PROFESIONAL VERIFICADO</div>
+                    </div>
+
+                    <div class="final-photo-circle" id="final-circle">
+                        <span class="final-initials" id="final-initials"></span>
+                        <img src="" alt="" id="final-img" style="display: none;">
+                    </div>
+
+                    <div class="final-data">
+                        <h2 class="final-name" id="final-name">Tu Nombre</h2>
+                        <p class="final-age" id="final-age">X años</p>
+                        <p class="final-career" id="final-career">CARRERA O ÁREA</p>
+                        <p class="final-work" id="final-work">Dónde trabajás</p>
+                    </div>
+
+                    <div class="experience-block" id="exp-block">
+                        <div class="experience-number" id="final-exp-val">0</div>
+                        <div class="experience-label">AÑOS DE EXPERIENCIA</div>
+                    </div>
+
+                    <div class="final-separator"></div>
+
+                    <div class="final-desc" id="final-desc">
+                        "Contá qué puede aprender un estudiante hablando con vos."
+                    </div>
+
+                    <div class="final-separator"></div>
+
+                    <div class="final-price-section">
+                        <span class="final-label">SESIÓN 30 MIN</span>
+                        <div class="final-price" id="final-price">$0.00</div>
+                    </div>
+
+                    <div class="final-ig-section" id="final-ig-section">
+                        <span class="final-label">INSTAGRAM</span>
+                        <div class="final-ig-value" id="final-ig-val">@usuario</div>
+                    </div>
+
+                    <div class="final-footer">
+                        <div class="footer-line"></div>
+                        <div class="footer-branding">NOVAN.AR · ORIENTACIÓN VOCACIONAL REAL</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="final-actions">
+                <button class="btn-edit" id="btn-edit">← Editar mi tarjeta</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const profileData = {
+            name: '',
+            age: '',
+            exp: '',
+            career: '',
+            work: '',
+            desc: '',
+            currency: '$',
+            price: '',
+            ig: '',
+            photo: null
+        };
+
+        const stateEdit = document.getElementById('state-edit');
+        const stateFinal = document.getElementById('state-final');
+        const profileForm = document.getElementById('profile-form');
+        const navbar = document.getElementById('navbar');
+
+        // Scroll Navbar Effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
-      }, { threshold: 0.1 });
-      revealEls.forEach(function(el) { observer.observe(el); });
-    });
-  </script>
+
+        // Initials Logic
+        function getInitials(name) {
+            const parts = name.trim().split(/\s+/);
+            if (parts.length === 0 || !parts[0]) return '';
+            let initials = parts[0][0];
+            if (parts.length > 1) {
+                initials += parts[parts.length - 1][0];
+            }
+            return initials.toUpperCase();
+        }
+
+        function updatePhotoArea(container, initialsSpan, imgElement, name, photo) {
+            if (!name && !photo) {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'flex';
+            if (photo) {
+                imgElement.src = photo;
+                imgElement.style.display = 'block';
+                initialsSpan.style.display = 'none';
+            } else {
+                imgElement.style.display = 'none';
+                initialsSpan.textContent = getInitials(name);
+                initialsSpan.style.display = 'block';
+            }
+        }
+
+        // Real-time Syncing
+        const inputs = {
+            name: document.getElementById('input-name'),
+            age: document.getElementById('input-age'),
+            exp: document.getElementById('input-exp'),
+            career: document.getElementById('input-career'),
+            work: document.getElementById('input-work'),
+            desc: document.getElementById('input-desc'),
+            currency: document.getElementById('input-currency'),
+            price: document.getElementById('input-price'),
+            ig: document.getElementById('input-ig')
+        };
+
+        const mini = {
+            name: document.getElementById('mini-name'),
+            career: document.getElementById('mini-career'),
+            ig: document.getElementById('mini-ig'),
+            circle: document.getElementById('mini-circle'),
+            initials: document.getElementById('mini-initials'),
+            img: document.getElementById('mini-img')
+        };
+
+        const final = {
+            name: document.getElementById('final-name'),
+            age: document.getElementById('final-age'),
+            career: document.getElementById('final-career'),
+            work: document.getElementById('final-work'),
+            desc: document.getElementById('final-desc'),
+            price: document.getElementById('final-price'),
+            igVal: document.getElementById('final-ig-val'),
+            igSection: document.getElementById('final-ig-section'),
+            expVal: document.getElementById('final-exp-val'),
+            expBlock: document.getElementById('exp-block'),
+            circle: document.getElementById('final-circle'),
+            initials: document.getElementById('final-initials'),
+            img: document.getElementById('final-img')
+        };
+
+        // Text input syncing
+        inputs.name.addEventListener('input', (e) => {
+            const val = e.target.value;
+            profileData.name = val;
+            mini.name.textContent = val || 'Tu Nombre';
+            updatePhotoArea(mini.circle, mini.initials, mini.img, val, profileData.photo);
+        });
+
+        inputs.career.addEventListener('input', (e) => {
+            mini.career.textContent = (e.target.value || 'CARRERA O ÁREA').toUpperCase();
+            profileData.career = e.target.value;
+        });
+
+        inputs.ig.addEventListener('input', (e) => {
+            const val = e.target.value;
+            mini.ig.textContent = val ? (val.startsWith('@') ? val : `@${val}`) : '@usuario';
+            profileData.ig = val;
+        });
+
+        inputs.desc.addEventListener('input', (e) => {
+            document.getElementById('desc-counter').textContent = `${e.target.value.length} / 180`;
+            profileData.desc = e.target.value;
+        });
+
+        inputs.age.addEventListener('input', (e) => profileData.age = e.target.value);
+        inputs.exp.addEventListener('input', (e) => profileData.exp = e.target.value);
+        inputs.work.addEventListener('input', (e) => profileData.work = e.target.value);
+        inputs.currency.addEventListener('change', (e) => profileData.currency = e.target.value);
+        inputs.price.addEventListener('input', (e) => profileData.price = e.target.value);
+
+        // Photo Handling
+        const photoInput = document.getElementById('input-photo');
+        const thumbContainer = document.getElementById('thumb-container');
+        const photoThumb = document.getElementById('photo-thumb');
+        const btnRemovePhoto = document.getElementById('btn-remove-photo');
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profileData.photo = event.target.result;
+                    photoThumb.src = event.target.result;
+                    thumbContainer.style.display = 'block';
+                    updatePhotoArea(mini.circle, mini.initials, mini.img, profileData.name, profileData.photo);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        btnRemovePhoto.addEventListener('click', () => {
+            profileData.photo = null;
+            thumbContainer.style.display = 'none';
+            photoInput.value = '';
+            updatePhotoArea(mini.circle, mini.initials, mini.img, profileData.name, null);
+        });
+
+        // Form Submit -> Final Card
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            renderFinalCard();
+            transitionTo('final');
+        });
+
+        function renderFinalCard() {
+            final.name.textContent = profileData.name;
+            final.age.textContent = profileData.age ? `${profileData.age} años` : '';
+            final.career.textContent = profileData.career.toUpperCase();
+            final.work.textContent = profileData.work;
+            final.desc.textContent = `"${profileData.desc}"`;
+            final.price.textContent = `${profileData.currency} ${profileData.price}`;
+
+            if (profileData.ig) {
+                final.igVal.textContent = profileData.ig.startsWith('@') ? profileData.ig : `@${profileData.ig}`;
+                final.igSection.style.display = 'block';
+            } else {
+                final.igSection.style.display = 'none';
+            }
+
+            if (profileData.exp) {
+                final.expVal.textContent = profileData.exp;
+                final.expBlock.style.display = 'block';
+            } else {
+                final.expBlock.style.display = 'none';
+            }
+
+            updatePhotoArea(final.circle, final.initials, final.img, profileData.name, profileData.photo);
+        }
+
+        // Transitions
+        document.getElementById('btn-edit').addEventListener('click', () => {
+            transitionTo('edit');
+        });
+
+        function transitionTo(state) {
+            const target = state === 'final' ? stateFinal : stateEdit;
+            const current = state === 'final' ? stateEdit : stateFinal;
+
+            current.style.opacity = '0';
+            setTimeout(() => {
+                current.style.display = 'none';
+                target.style.display = (state === 'final' ? 'block' : 'grid');
+                window.scrollTo(0, 0);
+                setTimeout(() => {
+                    target.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+    </script>
 </body>
 </html>
