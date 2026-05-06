@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg: #050505;
@@ -572,6 +573,29 @@
             color: var(--text);
         }
 
+        .btn-download {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-download:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
         /* --- MOBILE --- */
         @media (max-width: 768px) {
             .navbar { padding: 16px 20px; }
@@ -815,12 +839,18 @@
 
             <div class="final-actions">
                 <button class="btn-edit" id="btn-edit">← Editar mi tarjeta</button>
+                <button class="btn-download" id="btn-download">DESCARGAR MI TARJETA ↓</button>
             </div>
         </div>
 
     </div>
 
     <script>
+        const CLOUDINARY_CLOUD_NAME = 'dq1k0bo7h';
+        const CLOUDINARY_UPLOAD_PRESET = 'NOVAN TARJETA';
+        const CLOUDINARY_API_KEY = '659833896449642';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUG16lp5e47xP5l4acG7qoA3yzIzcwd18rp-d6pShWjtrsAHywu28NCp5cqVc4angj/exec';
+
         const profileData = {
             name: '',
             age: '',
@@ -1019,6 +1049,128 @@
                 }, 50);
             }, 300);
         }
+
+        // --- EXPORTACIÓN Y SUBIDA ---
+        async function uploadToCloudinary(blob) {
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('api_key', CLOUDINARY_API_KEY);
+            formData.append('folder', 'novan-tarjetas');
+            
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+                { method: 'POST', body: formData }
+            );
+            
+            const data = await response.json();
+            return data.secure_url;
+        }
+
+        document.getElementById('btn-download').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-download');
+            const card = document.getElementById('card-to-capture');
+            
+            // 1. Estado inicial del botón
+            btn.textContent = 'GENERANDO...';
+            btn.disabled = true;
+
+            try {
+                // 2. Captura con html2canvas
+                const canvas = await html2canvas(card, {
+                    scale: 2,
+                    backgroundColor: '#0A0A0A',
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false
+                });
+
+                // 3. Exportar PNG y descargar
+                const dataUrl = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = `novan-tarjeta-${profileData.name.replace(/\s+/g, '-').toLowerCase() || 'profesional'}.png`;
+                link.href = dataUrl;
+                link.click();
+
+                // 4. Subir a Cloudinary
+                const res = await fetch(dataUrl);
+                const blob = await res.blob();
+                
+                let cloudinaryUrl = '';
+                try {
+                    cloudinaryUrl = await uploadToCloudinary(blob);
+                } catch(e) {
+                    console.error('Error subiendo a Cloudinary:', e);
+                }
+
+                // 5. Enviar a Google Sheets
+                const payload = {
+                    timestamp: new Date().toLocaleString('es-AR'),
+                    nombre: profileData.name,
+                    edad: profileData.age || '',
+                    carrera: profileData.career,
+                    trabajo: profileData.work,
+                    descripcion: profileData.desc,
+                    precio: profileData.currency + ' ' + profileData.price,
+                    instagram: profileData.ig || '',
+                    imagen_url: cloudinaryUrl,
+                    pagina: 'tarjeta'
+                };
+
+                if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('REEMPLAZAR')) {
+                    try {
+                        await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            body: JSON.stringify(payload)
+                        });
+                    } catch(e) {
+                        console.error('Error enviando a Sheets:', e);
+                    }
+                } else {
+                    console.log('Datos listos para enviar a Sheets (URL pendiente):', payload);
+                }
+            } catch (err) {
+                console.error('Error generando tarjeta:', err);
+                alert('Hubo un problema al generar la tarjeta. Intentá nuevamente.');
+            } finally {
+                // 6. Restaurar botón
+                btn.textContent = 'DESCARGAR MI TARJETA ↓';
+                btn.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
+
+<!--
+// APPS SCRIPT ACTUALIZADO — reemplazar en script.google.com
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Tarjetas");
+  if (!sheet) {
+    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Tarjetas");
+    sheet.appendRow(["Timestamp", "Nombre", "Edad", "Carrera", "Trabajo", 
+                     "Descripción", "Precio", "Instagram", "Imagen URL"]);
+  }
+  try {
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp || new Date(),
+      data.nombre || '',
+      data.edad || '',
+      data.carrera || '',
+      data.trabajo || '',
+      data.descripcion || '',
+      data.precio || '',
+      data.instagram || '',
+      data.imagen_url || ''
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+-->
