@@ -3,1443 +3,1186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novan - Orientación Vocacional Real</title>
-    <meta name="description" content="Antes de elegir tu carrera, hablá con alguien que ya la vive. Videollamadas de 30 minutos con profesionales jóvenes.">
-    
-    <!-- Google Fonts -->
+    <title>Tarjeta Novan — Generá tu presentación</title>
+    <meta name="description" content="Editá tu tarjeta de presentación Novan para compartir en Instagram.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* Variables de Color y Tipografía */
         :root {
-            --bg-main: #0A0A0A;
-            --red-primary: #CC2936;
-            --red-hover: #E8303D;
-            --red-muted: #6B1219;
-            --white-main: #FFFFFF;
-            --white-warm: #F5F0EB;
-            --grey-sec: #6B7280;
-            --grey-dark: #1A1A1A;
-            --grey-mid: #2A2A2A;
-            --bg-alt: #111111;
-            
-            --font-display: 'Cormorant Garamond', Georgia, serif;
-            --font-body: 'Inter', -apple-system, sans-serif;
-            
-            --max-width: 1200px;
-            --text-max-width: 700px;
+            --bg: #050505;
+            --card-bg: #0A0A0A;
+            --accent: #CC2936;
+            --accent-hover: #E8303D;
+            --text: #F5F0EB;
+            --text-secondary: #6B7280;
+            --border: #1A1A1A;
+            --serif: 'Cormorant Garamond', serif;
+            --sans: 'Inter', sans-serif;
         }
 
-        /* Resets & Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--white-warm);
-            font-family: var(--font-body);
-            font-weight: 300;
-            line-height: 1.6;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, h4, h5, h6, .display-font {
-            font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--white-main);
-            line-height: 1.1;
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            line-height: 1.5;
+            overflow-x: hidden;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        input {
-            font-family: var(--font-body);
-            font-size: 16px; /* Evita zoom en iOS */
-        }
-
-        /* SVG Noise Filter Container */
-        .svg-filters {
-            position: absolute;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-        }
-
-        /* Utilidades Globales */
-        .container {
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .eyebrow {
-            color: var(--red-primary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .section-padding {
-            padding: 120px 0;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Botones */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            border-radius: 4px;
-            font-family: var(--font-body);
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            border: none;
-            outline: none;
-        }
-
-        .btn-primary {
-            background-color: var(--red-primary);
-            color: var(--white-main);
-            border: 1px solid var(--red-primary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--red-hover);
-            border-color: var(--red-hover);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--red-primary);
-            border: 1px solid var(--red-primary);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(204, 41, 54, 0.1);
-        }
-
-        /* 1. Navbar */
+        /* --- NAVBAR --- */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: background-color 0.3s ease, padding 0.3s ease;
-            padding: 24px 0;
-            background-color: transparent;
-        }
-
-        .navbar.scrolled {
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 16px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: var(--white-main);
-            letter-spacing: 0.02em;
-        }
-
-        .logo span {
-            color: var(--red-primary);
-        }
-
-        .nav-links {
-            display: none;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--white-warm);
-        }
-
-        .nav-links a:hover {
-            color: var(--red-primary);
-        }
-
-        .hamburger {
-            display: block;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background-color: var(--white-main);
-            margin: 5px 0;
-            transition: 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            max-width: 320px;
-            height: 100vh;
-            background-color: var(--grey-dark);
-            z-index: 999;
-            padding: 100px 30px;
-            transition: right 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            border-left: 1px solid var(--grey-mid);
-        }
-
-        .mobile-menu.active {
             right: 0;
+            padding: 24px 40px;
+            z-index: 1000;
+            transition: background 0.3s ease;
         }
-
-        .mobile-menu a {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--white-main);
+        .navbar.scrolled {
+            background: #0A0A0A;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
         }
-
-        .mobile-menu .btn {
-            margin-top: 20px;
+        .logo {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 26px;
+            text-decoration: none;
+            line-height: 1;
         }
+        .logo-n { color: var(--accent); }
+        .logo-rest { color: var(--text); }
 
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 998;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* 2. Hero */
-        .hero {
-            position: relative;
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            background-color: var(--bg-main);
-            overflow: hidden;
-            padding-top: 80px;
+            flex-direction: column;
         }
 
-        .hero::before {
+        /* --- STATE 1: DASHBOARD --- */
+        #state-edit {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 64px;
+            align-items: start;
+            padding: 120px 24px 80px;
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #state-edit::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            filter: url(#noiseFilter);
-            opacity: 0.03;
-            pointer-events: none;
+            inset: 0;
+            background: rgba(5,5,5,0.88);
+            z-index: 0;
+        }
+
+        #state-edit > * {
+            position: relative;
             z-index: 1;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
+        /* --- PREVIEW COLUMN --- */
+        .preview-column {
+            position: sticky;
+            top: 120px;
         }
 
-        .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: var(--grey-sec);
-            font-family: var(--font-body);
-            font-weight: 500;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            margin-bottom: 2rem;
+        .preview-title {
+            font-size: 11px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
         }
 
-        .hero-eyebrow::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background-color: var(--red-primary);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 span {
-            color: var(--red-primary);
-        }
-
-        .hero-subtitle {
-            font-size: 1.15rem;
-            font-weight: 300;
-            color: var(--white-warm);
-            max-width: var(--text-max-width);
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 1.5rem;
-        }
-
-        .trust-signal {
-            color: var(--grey-sec);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            font-weight: 400;
-        }
-
-        .hero-bg-text {
-            position: absolute;
-            bottom: -5%;
-            right: -5%;
-            font-family: var(--font-display);
-            font-size: 15vw;
-            color: var(--white-main);
-            opacity: 0.03;
-            line-height: 1;
-            z-index: 1;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        /* 3. Problema */
-        .problema h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            max-width: var(--text-max-width);
-            margin-bottom: 1rem;
-        }
-
-        .problema h2 span {
-            color: var(--red-primary);
-        }
-
-        .problema-subtitle {
-            font-size: 1.1rem;
-            color: var(--white-warm);
-            max-width: var(--text-max-width);
-            margin-bottom: 4rem;
-        }
-
-        .problema-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .problema-card {
+        .mini-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 32px;
+            border-radius: 2px;
             position: relative;
-        }
-
-        .problema-number {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            color: var(--red-primary);
-            opacity: 0.3;
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .problema-card h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 1rem;
-        }
-
-        .problema-card p {
-            max-width: 400px;
-        }
-
-        /* 4. Cómo Funciona */
-        .como-funciona {
-            background-color: var(--bg-alt);
-        }
-
-        .como-funciona h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .step-card {
-            background-color: var(--grey-dark);
-            border: 1px solid var(--grey-mid);
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--red-muted);
-        }
-
-        .step-card h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 1rem;
-        }
-
-        /* 5. Diferenciadores */
-        .diferenciadores h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .diff-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .diff-item {
-            border-left: 3px solid var(--red-primary);
-            padding-left: 1.5rem;
-            max-width: 500px;
-        }
-
-        .diff-item h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 0.5rem;
-        }
-
-        /* 6. Testimonios */
-        .testimonios {
-            background-color: var(--bg-alt);
-        }
-
-        .testimonios h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .testimonio-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .testimonio-card {
-            background-color: var(--grey-dark);
-            border: 1px solid var(--grey-mid);
-            border-radius: 12px;
-            padding: 2.5rem;
-            position: relative;
-            transition: border-color 0.3s ease;
-        }
-
-        .testimonio-card:hover {
-            border-color: var(--red-primary);
-        }
-
-        .quote-icon {
-            color: var(--red-primary);
-            font-size: 3rem;
-            font-family: var(--font-display);
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .testimonio-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--white-warm);
-        }
-
-        .testimonio-author {
-            font-family: var(--font-body);
-            font-weight: 600;
-            color: var(--white-main);
-        }
-
-        .testimonio-detail {
-            color: var(--grey-sec);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-        }
-
-        .cta-link {
-            color: var(--white-main);
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cta-link:hover {
-            color: var(--red-primary);
-        }
-
-        /* 7. FAQ */
-        .faq h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .faq-container {
-            max-width: 800px;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--grey-mid);
-            padding: 1.5rem 0;
-        }
-
-        .faq-item:first-child {
-            border-top: 1px solid var(--grey-mid);
-        }
-
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--white-main);
-            font-size: 1.1rem;
-        }
-
-        .faq-icon {
-            font-size: 1.5rem;
-            color: var(--red-primary);
-            transition: transform 0.3s ease;
-            font-weight: 300;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, margin-top 0.3s ease;
-            color: var(--white-warm);
         }
 
-        .faq-item.active .faq-answer {
-            margin-top: 1rem;
-            max-height: 200px;
-        }
-
-        /* 8. Estudiantes & CTA Profesionales */
-        /* Bloque A */
-        .form-estudiantes {
-            background-color: var(--bg-alt);
-            border-top: 2px solid var(--red-primary);
-            padding: 100px 0;
-        }
-
-        .form-estudiantes h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 2rem;
-        }
-
-        .form-wrapper {
-            max-width: 600px;
-        }
-
-        .form-input-group {
+        /* Photo/Initials Styles */
+        .photo-circle {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: #111111;
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: none; /* Hidden until name or photo */
         }
 
-        .form-input {
+        .photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-initials {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--text);
+        }
+
+        .mini-card-name {
+            font-family: var(--serif);
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .mini-card-career {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .mini-card-ig {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* --- FORM COLUMN --- */
+        .form-header {
+            margin-bottom: 40px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .form-title {
+            font-family: var(--serif);
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            flex: 1;
+        }
+
+        .form-group.flex-2 { flex: 2; }
+
+        .form-label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        input, textarea, select {
             width: 100%;
             background: transparent;
             border: none;
-            border-bottom: 1px solid var(--grey-mid);
-            color: var(--white-main);
-            font-size: 22px;
-            padding: 12px 0;
-            font-family: var(--font-body);
-            transition: border-color 0.3s ease;
-        }
-
-        .form-input:focus {
+            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            font-family: var(--sans);
+            font-size: 16px;
+            color: var(--text);
             outline: none;
-            border-bottom-color: var(--red-primary);
+            transition: border-color 150ms ease;
+            border-radius: 0;
         }
 
-        .form-input::placeholder {
-            color: var(--grey-sec);
+        input:focus, textarea:focus, select:focus {
+            border-bottom-color: var(--accent);
         }
 
-        .form-note {
-            color: var(--grey-sec);
-            font-size: 0.9rem;
-            margin-top: 1rem;
+        /* Currency dropdown styles */
+        .price-container {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .currency-selector {
+            width: 70px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+            padding-right: 20px;
+            cursor: pointer;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .char-counter {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Photo Button */
+        .photo-upload-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-photo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-photo:hover {
+            border-color: var(--accent);
+        }
+
+        .photo-thumb-container {
+            position: relative;
+            display: none;
+        }
+
+        .photo-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-remove-photo {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-hover);
+        }
+
+        /* --- STATE 2: FINAL CARD --- */
+        #state-final {
+            display: none;
+            opacity: 0;
+            padding: 120px 24px 80px;
+        }
+
+        .final-card-wrapper {
+            width: 480px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+            background: #0A0A0A;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            border-radius: 2px;
+            box-sizing: border-box;
+        }
+
+        .card-content {
+            width: 58%;
+            padding: 40px 36px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-bg-strip {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 42%;
+            z-index: 1;
+        }
+
+        .card-bg-strip img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .card-bg-strip::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, #0A0A0A 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .card-bg-strip::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(204, 41, 54, 0.12);
+            z-index: 3;
+        }
+
+        .final-logo {
+            font-family: var(--serif);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .final-verified {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+        }
+
+        /* Fallback Initials for Final Card */
+        .final-photo-circle {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 24px;
+            position: relative;
+            z-index: 10;
+            margin-right: -20px; 
+            overflow: hidden;
+            display: none;
+        }
+
+        .final-photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .final-initials {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text);
+        }
+
+        .final-data {
+            margin-top: 20px;
+        }
+
+        .final-name {
+            font-family: var(--serif);
+            font-size: 32px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .final-age {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .final-career {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .final-work {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Experience Block */
+        .experience-block {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .experience-number {
+            font-family: var(--serif);
+            font-size: 52px;
+            line-height: 1;
+            color: var(--text);
+        }
+
+        .experience-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .final-separator {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        .final-desc {
+            font-size: 13px;
+            line-height: 1.7;
+            font-style: italic;
+            color: var(--text);
+        }
+
+        .final-price-section {
+            margin-top: 0;
+        }
+
+        .final-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
             display: block;
         }
 
-        .form-message {
-            margin-top: 1rem;
+        .final-price {
+            font-family: var(--serif);
+            font-size: 26px;
+            color: var(--text);
+            margin-top: 4px;
+        }
+
+        .final-ig-section {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .final-ig-value {
+            font-size: 13px;
+            color: var(--accent);
+            margin-top: 2px;
             font-weight: 500;
         }
 
-        /* Bloque B */
-        .cta-profesionales {
-            background: linear-gradient(to bottom, var(--bg-main), var(--grey-dark));
-            text-align: center;
-            padding: 100px 0;
+        .final-footer {
+            margin-top: 24px;
         }
 
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .footer-line {
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 12px;
         }
 
-        .cta-profesionales h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-subtitle {
-            font-size: 1.15rem;
-            margin-bottom: 3rem;
-            color: var(--white-warm);
-        }
-
-        .mini-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
-
-        .mini-feature {
-            font-weight: 500;
-            color: var(--white-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .mini-feature::before {
-            content: "•";
-            color: var(--red-primary);
-            font-size: 1.5rem;
-            line-height: 0.5;
-        }
-
-        /* 9. Footer */
-        .footer {
-            background-color: #050505;
-            padding: 80px 0 40px;
-            border-top: 1px solid var(--grey-mid);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .footer-tagline {
-            color: var(--grey-sec);
-            font-size: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--white-warm);
+        .footer-branding {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #333;
             font-weight: 500;
         }
 
-        .footer-links a:hover {
-            color: var(--red-primary);
+        .final-actions {
+            max-width: 480px;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .footer-bottom {
-            margin-top: 4rem;
-            color: var(--grey-sec);
-            font-size: 0.85rem;
-            text-align: center;
+        .btn-edit {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--sans);
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
 
-        /* Breakpoints Responsive */
-        @media (min-width: 480px) {
-            .hero-buttons {
-                flex-direction: row;
-            }
-            .form-input-group {
-                flex-direction: row;
-                align-items: flex-end;
-            }
-            .form-input-group .btn {
-                white-space: nowrap;
-            }
+        .btn-edit:hover {
+            color: var(--text);
         }
 
-        @media (min-width: 768px) {
-            .problema-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .steps-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .diff-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .diff-item:not(:last-child) {
-                border-right: 1px solid var(--grey-dark);
-                padding-right: 1.5rem;
-            }
-            .testimonio-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .mini-features {
-                flex-direction: row;
-                gap: 3rem;
-            }
+        .btn-download {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
-        @media (min-width: 1024px) {
-            .nav-links {
+        .btn-download:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-download:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .navbar { padding: 16px 20px; }
+            .logo { font-size: 22px; }
+            
+            #state-edit {
+                display: block; /* No grid on mobile */
+                padding-top: 100px;
+            }
+
+            .preview-column {
+                display: none; /* Hide preview on mobile */
+            }
+
+            .form-row { 
+                flex-direction: column; 
+                gap: 0; 
+            }
+
+            input, textarea, select {
+                font-size: 16px;
+                padding: 14px 0;
+            }
+
+            .btn-generate {
+                padding: 18px;
+                font-size: 13px;
+            }
+
+            /* --- FINAL CARD MOBILE --- */
+            .final-card-wrapper {
+                width: 100%;
+                aspect-ratio: 4 / 5;
+                height: auto;
+                margin: auto;
+                flex-direction: column;
+            }
+
+            .card-bg-strip { 
+                position: relative; 
+                width: 100%; 
+                height: 180px;
+                order: -1;
+            }
+            
+            .card-bg-strip::before {
+                background: linear-gradient(to bottom, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%);
+            }
+
+            .card-content { 
+                width: 100%; 
+                padding: 24px; 
+            }
+
+            .final-header {
                 display: flex;
-            }
-            .hamburger {
-                display: none;
-            }
-            .footer-content {
-                flex-direction: row;
                 justify-content: space-between;
-                text-align: left;
+                align-items: center;
+                margin-bottom: 20px;
             }
-            .footer-bottom {
-                text-align: left;
-            }
-            .diff-item {
-                padding-left: 2rem;
-            }
-        }
 
-        @media (min-width: 1200px) {
-            .section-padding, .form-estudiantes, .cta-profesionales {
-                padding: 140px 0;
+            .final-photo-circle {
+                margin: 20px 0 0 0;
+                position: relative;
+                z-index: 10;
             }
+
+            .final-data {
+                margin-top: 16px;
+            }
+
+            .final-name { font-size: 28px; }
+            .experience-number { font-size: 40px; }
+            .final-price { font-size: 22px; }
+
+            .final-separator { margin: 16px 0; }
+            .experience-block { margin-top: 16px; }
+            .final-footer { margin-top: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SVG Filters -->
-    <svg class="svg-filters">
-        <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch"/>
-        </filter>
-    </svg>
-
-    <!-- 1. Navbar -->
     <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo"><span>N</span>ovan</a>
-            <div class="nav-links">
-                <a href="#como-funciona">Cómo funciona</a>
-                <a href="#faq">FAQ</a>
-                <a href="#cta-profesionales">Soy profesional</a>
-                <a href="#hero" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Empezar &rarr;</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="javascript:location.reload()" class="logo">
+            <span class="logo-n">N</span><span class="logo-rest">ovan</span>
+        </a>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="overlay" id="overlay"></div>
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#como-funciona" class="mobile-link">Cómo funciona</a>
-        <a href="#faq" class="mobile-link">FAQ</a>
-        <a href="#cta-profesionales" class="mobile-link">Soy profesional</a>
-        <a href="#hero" class="btn btn-primary mobile-link" style="width: 100%;">Empezar &rarr;</a>
-    </div>
-
-    <!-- 2. Hero -->
-    <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <div class="hero-eyebrow">ORIENTACIÓN VOCACIONAL REAL</div>
-                <h1>Hablá con alguien que ya vive lo que querés estudiar.</h1>
-                <p class="hero-subtitle">30 minutos. Un profesional joven. La verdad sobre tu carrera.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 32px;">
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">🎓 Elegís carrera este año</div>
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">😰 No sabés qué estudiar</div>
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">🔄 Querés cambiar de carrera</div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#form-estudiantes" class="btn btn-primary">Quiero orientación &rarr;</a>
-                    <a href="#cta-profesionales" class="btn btn-secondary">Soy profesional &rarr;</a>
-                </div>
-                <div class="trust-signal">100% HUMANO &middot; SIN IA &middot; SIN TESTS</div>
-            </div>
-        </div>
-        <div class="hero-bg-text">NOVAN</div>
-    </section>
-
-    <!-- 3. Problema -->
-    <section class="problema section-padding" id="problema">
-        <div class="container">
-            <span class="fade-in" style="font-family: var(--font-body); font-size: 11px; letter-spacing: 0.15em; color: #CC2936; font-weight: 600; text-transform: uppercase; margin-bottom: 32px; display: block;">EL PROBLEMA REAL</span>
-            
-            <div class="fade-in" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                <!-- BLOQUE 1 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.12); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                        <path d="M3 3v5h5"></path>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 42px; color: #CC2936; line-height: 1;">1 de cada 4</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">cambia de carrera</div>
-                </div>
-
-                <!-- BLOQUE 2 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.4); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="15" y1="9" x2="9" y2="15"></line>
-                        <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 56px; color: #CC2936; line-height: 1;">73%</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">nunca la termina</div>
-                </div>
-
-                <!-- BLOQUE 3 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.12); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 42px; color: #CC2936; line-height: 1;">5 años</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">perdidos eligiendo mal</div>
-                </div>
-            </div>
-
-            <!-- 4. UNA SOLA LÍNEA de texto debajo del grid -->
-            <p class="fade-in" style="font-family: var(--font-body); font-size: 15px; color: #6B7280; text-align: center; margin-top: 32px; margin-bottom: 64px;">No es falta de inteligencia. Es falta de información real.</p>
-
-            <div class="problema-grid">
-                <div class="problema-card fade-in">
-                    <div class="problema-number">01</div>
-                    <h3>Tus viejos estudiaron en otra época</h3>
-                    <p>Te aconsejan con buena intención, pero el mercado cambió. Lo que funcionó hace 20 años hoy no existe.</p>
-                </div>
-                <div class="problema-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="problema-number">02</div>
-                    <h3>Google no te dice cómo se siente</h3>
-                    <p>Podés buscar el plan de estudios, pero nadie te cuenta si vas a amar o sufrir esos 5 años.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Cómo Funciona -->
-    <section class="como-funciona section-padding" id="como-funciona">
-        <div class="container">
-            <span class="eyebrow fade-in">ASÍ DE SIMPLE</span>
-            <h2 class="fade-in">Tres pasos. Una decisión mejor.</h2>
-            <div class="steps-grid">
-                <div class="step-card fade-in">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">1</div>
-                    <h3>Elegí una carrera</h3>
-                    <p>Buscá entre más de 30 profesiones y encontrá a alguien que ya la vive.</p>
-                </div>
-                <div class="step-card fade-in" style="transition-delay: 0.2s;">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">2</div>
-                    <h3>Agendá tu llamada</h3>
-                    <p>Elegí el profesional, el día y la hora. 30 minutos que te ahorran años de duda.</p>
-                </div>
-                <div class="step-card fade-in" style="transition-delay: 0.4s;">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">3</div>
-                    <h3>Conversá en serio</h3>
-                    <p>Preguntale todo. Cómo es el día a día, cuánto se gana, qué haría distinto. Sin filtro.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Diferenciadores -->
-    <section class="diferenciadores section-padding" id="diferenciadores">
-        <div class="container">
-            <span class="eyebrow fade-in">¿POR QUÉ NOVAN?</span>
-            <h2 class="fade-in">Esto no es un test vocacional.</h2>
-            <div class="diff-grid">
-                <div class="diff-item fade-in">
-                    <h3>100% humano</h3>
-                    <p>Nada de inteligencia artificial. Hablás con una persona real que vivió lo que vos estás por decidir.</p>
-                </div>
-                <div class="diff-item fade-in" style="transition-delay: 0.2s;">
-                    <h3>Profesionales de 1 a 5 años</h3>
-                    <p>Gente joven que recuerda perfecto lo que es estar en tu lugar. No gurúes de 50 años.</p>
-                </div>
-                <div class="diff-item fade-in" style="transition-delay: 0.4s;">
-                    <h3>30 minutos que cambian tu decisión</h3>
-                    <p>Una conversación honesta vale más que 100 horas googleando planes de estudio.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Testimonios -->
-    <section class="testimonios section-padding" id="testimonios">
-        <div class="container">
-            <span class="eyebrow fade-in">EXPERIENCIAS REALES</span>
-            <h2 class="fade-in">Lo que dicen quienes ya hablaron.</h2>
-            <div class="testimonio-grid" id="testimonio-grid-container">
-                <div class="testimonio-card fade-in">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Estaba re perdida entre Derecho y Psico. Hablé 30 minutos con una abogada y me sacó todas las dudas que tenía hace meses.</p>
-                    <div class="testimonio-author">Sofi M.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">En mi casa querían que haga Medicina sí o sí. Hablé con un médico posta y me di cuenta que sí me copa, pero por mis propias razones.</p>
-                    <div class="testimonio-author">Tomi R.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.4s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Nadie me había explicado qué onda laburar en diseño de verdad. Esa charla me cambió la perspectiva.</p>
-                    <div class="testimonio-author">Vale G.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.6s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Yo pensaba que Ingeniería era solo hacer cuentas. Un ingeniero de 25 me mostró que era mucho más que eso.</p>
-                    <div class="testimonio-author">Mati L.</div>
-                    <div class="testimonio-detail">17 años</div>
-                </div>
-                
-                <div class="testimonio-card fade-in" id="btnAgregarResena" onclick="abrirModal()" style="background: transparent; border: 1px dashed rgba(204,41,54,0.35); border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: all 0.2s ease;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(204,41,54,0.5); display: flex; align-items: center; justify-content: center; font-size: 24px; color: #CC2936;">+</div>
-                    <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: #6B7280; text-align: center;">Contá tu experiencia</div>
-                </div>
-            </div>
-            
-            <style>
-                #btnAgregarResena:hover {
-                    border-color: rgba(204,41,54,0.7) !important;
-                    background: rgba(204,41,54,0.04) !important;
-                }
-            </style>
-        </div>
-    </section>
-
-    <!-- 7. FAQ -->
-    <section class="faq section-padding" id="faq">
-        <div class="container">
-            <span class="eyebrow fade-in">LO QUE TODOS PREGUNTAN</span>
-            <h2 class="fade-in">Respuestas directas.</h2>
-            <div class="faq-container">
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Cuánto dura una sesión?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Entre 20 y 30 minutos.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Cuánto cuesta?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Cada profesional pone su precio. Generalmente entre $2.000 y $8.000 ARS.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Los profesionales son verificados?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, cada profesional pasa por un proceso de verificación.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Puedo hablar con más de un profesional?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, podés agendar tantas llamadas como quieras.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Qué pasa si no puedo asistir?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Podés cancelar o reprogramar hasta 24 horas antes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Formulario Estudiantes + CTA Profesionales -->
-    <div id="estudiantes-y-profesionales">
+    <div class="container">
         
-        <!-- Bloque A: Formulario Estudiantes -->
-        <section class="form-estudiantes" id="form-estudiantes">
-            <div class="container">
-                <div class="form-wrapper fade-in">
-                    <span class="eyebrow">ENCONTRÁ TU PROFESIONAL</span>
-                    <h2>¿Con qué carrera querés empezar?</h2>
-                    
-                    <div id="step-1">
-                        <div class="form-input-group">
-                            <input type="text" id="carrera-input" class="form-input" placeholder="Ej: Medicina, Arquitectura, Derecho...">
-                            <button id="btn-buscar" class="btn btn-primary">BUSCAR PROFESIONALES &rarr;</button>
-                        </div>
+        <!-- ESTADO 1: DASHBOARD DE EDICIÓN -->
+        <div id="state-edit">
+            
+            <!-- COLUMNA IZQUIERDA: PREVIEW -->
+            <div class="preview-column">
+                <p class="preview-title">PREVIEW EN TIEMPO REAL</p>
+                <div class="mini-card" id="mini-card">
+                    <div class="photo-circle" id="mini-circle">
+                        <span class="photo-initials" id="mini-initials"></span>
+                        <img src="" alt="" id="mini-img" style="display: none;">
                     </div>
-
-                    <div id="step-2" style="display: none;">
-                        <p style="margin-bottom: 1rem; color: var(--white-warm); font-size: 1.1rem;">Estamos cargando los primeros profesionales. Dejanos tu mail y te avisamos.</p>
-                        <div class="form-input-group">
-                            <input type="email" id="email-input" class="form-input" placeholder="tu@email.com">
-                            <button id="btn-avisame" class="btn btn-primary">AVISAME &rarr;</button>
-                        </div>
-                        <p id="form-message" class="form-message"></p>
-                    </div>
-                    
-                    <span class="form-note">Si tu carrera no está, la agregamos. Escribinos.</span>
+                    <div class="mini-card-name" id="mini-name">Tu Nombre</div>
+                    <div class="mini-card-career" id="mini-career">CARRERA O ÁREA</div>
+                    <div class="mini-card-ig" id="mini-ig">@usuario</div>
                 </div>
             </div>
-        </section>
 
-        <!-- Separador Visual -->
-        <div style="padding: 80px 0;">
-            <div style="max-width: 200px; margin: 0 auto; border-top: 1px solid var(--grey-mid);"></div>
+            <!-- COLUMNA DERECHA: FORMULARIO -->
+            <div class="form-column">
+                <div class="form-header">
+                    <p class="eyebrow">TU TARJETA NOVAN</p>
+                    <h1 class="form-title">Editá tu presentación.</h1>
+                </div>
+
+                <form id="profile-form">
+                    <div class="form-row">
+                        <div class="form-group flex-2">
+                            <label class="form-label">Nombre completo</label>
+                            <input type="text" id="input-name" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Edad (opcional)</label>
+                            <input type="number" id="input-age" placeholder="Tu edad">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Años de exp. (opcional)</label>
+                            <input type="number" id="input-exp" placeholder="Ej: 3" min="0" max="50">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Carrera o área</label>
+                        <input type="text" id="input-career" placeholder="Ej: Abogada, Diseñador, Médico" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dónde trabajás o qué hacés</label>
+                        <input type="text" id="input-work" placeholder="Ej: Estudio jurídico / Freelance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">¿Por qué hablar con vos?</label>
+                        <textarea id="input-desc" placeholder="Contá qué puede aprender un estudiante hablando con vos" maxlength="180" required></textarea>
+                        <div id="desc-counter" class="char-counter">0 / 180</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Precio de la sesión (30 min)</label>
+                            <div class="price-container">
+                                <select id="input-currency" class="currency-selector">
+                                    <option value="$">$</option>
+                                    <option value="USD">USD</option>
+                                    <option value="€">€</option>
+                                </select>
+                                <input type="text" id="input-price" placeholder="Ej: 5.000" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Instagram (opcional)</label>
+                            <input type="text" id="input-ig" placeholder="@tuusuario">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Foto de perfil</label>
+                        <div class="photo-upload-container">
+                            <label for="input-photo" class="btn-photo">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                Subir foto
+                            </label>
+                            <input type="file" id="input-photo" accept="image/*" style="display: none;">
+                            <div class="photo-thumb-container" id="thumb-container">
+                                <img src="" alt="" class="photo-thumb" id="photo-thumb">
+                                <button type="button" class="btn-remove-photo" id="btn-remove-photo">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-generate">GENERAR MI TARJETA →</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Bloque B: CTA Profesionales -->
-        <section class="cta-profesionales" id="cta-profesionales">
-            <div class="container">
-                <div class="cta-content fade-in">
-                    <span class="eyebrow" style="text-align: center; color: var(--red-primary);">PARA PROFESIONALES</span>
-                    <h2 style="font-family: var(--font-display); text-align: center; color: var(--white-main);">¿Tenés experiencia real en tu carrera?</h2>
-                    <p class="cta-subtitle" style="font-family: var(--font-body); font-weight: 300; text-align: center; color: var(--white-warm);">Sumate a la red de profesionales Novan y generá ingresos compartiendo lo que sabés.</p>
-                    
-                    <a href="profesionales.html" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem; margin-bottom: 1.5rem;">Quiero ser referente &rarr;</a>
-                    <div class="trust-signal" style="display: block; color: var(--grey-sec);">INSCRIPCIÓN ABIERTA &middot; SIN COSTO &middot; 5 MINUTOS</div>
+        <!-- ESTADO 2: TARJETA FINAL -->
+        <div id="state-final">
+            <div class="final-card-wrapper" id="card-to-capture">
+                
+                <div class="card-bg-strip">
+                    <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1920&q=80" alt="Fondo">
+                </div>
+
+                <div class="card-content">
+                    <div class="final-header">
+                        <div class="logo final-logo">
+                            <span class="logo-n">N</span><span class="logo-rest">ovan</span>
+                        </div>
+                        <div class="final-verified">PROFESIONAL VERIFICADO</div>
+                    </div>
+
+                    <div class="final-photo-circle" id="final-circle">
+                        <span class="final-initials" id="final-initials"></span>
+                        <img src="" alt="" id="final-img" style="display: none;">
+                    </div>
+
+                    <div class="final-data">
+                        <h2 class="final-name" id="final-name">Tu Nombre</h2>
+                        <p class="final-age" id="final-age">X años</p>
+                        <p class="final-career" id="final-career">CARRERA O ÁREA</p>
+                        <p class="final-work" id="final-work">Dónde trabajás</p>
+                    </div>
+
+                    <div class="experience-block" id="exp-block">
+                        <div class="experience-number" id="final-exp-val">0</div>
+                        <div class="experience-label">AÑOS DE EXPERIENCIA</div>
+                    </div>
+
+                    <div class="final-separator"></div>
+
+                    <div class="final-desc" id="final-desc">
+                        "Contá qué puede aprender un estudiante hablando con vos."
+                    </div>
+
+                    <div class="final-separator"></div>
+
+                    <div class="final-price-section">
+                        <span class="final-label">SESIÓN 30 MIN</span>
+                        <div class="final-price" id="final-price">$0.00</div>
+                    </div>
+
+                    <div class="final-ig-section" id="final-ig-section">
+                        <span class="final-label">INSTAGRAM</span>
+                        <div class="final-ig-value" id="final-ig-val">@usuario</div>
+                    </div>
+
+                    <div class="final-footer">
+                        <div class="footer-line"></div>
+                        <div class="footer-branding">NOVAN.AR · ORIENTACIÓN VOCACIONAL REAL</div>
+                    </div>
                 </div>
             </div>
-        </section>
+
+            <div class="final-actions">
+                <button class="btn-edit" id="btn-edit">← Editar mi tarjeta</button>
+                <button class="btn-download" id="btn-download">DESCARGAR MI TARJETA ↓</button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- 9. Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div style="text-align: center; width: 100%;">
-                    <a href="#" class="logo" style="margin-bottom: 0.5rem; display: block;"><span>N</span>ovan</a>
-                    <p class="footer-tagline">Orientación vocacional real. De humano a humano.</p>
-                </div>
-            </div>
-            
-            <div style="display: flex; justify-content: center; margin-top: 2rem;">
-                <div class="footer-links">
-                    <a href="#">Instagram</a>
-                    <a href="mailto:contacto@novan.ar">Contacto</a>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 Novan. Buenos Aires, Argentina.</p>
-                <p style="font-family: var(--font-body); font-size: 12px; color: #333333; margin-top: 0.5rem;">Hecho con café desde Buenos Aires.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
     <script>
-        // Navbar Scroll Effect
+        const CLOUDINARY_CLOUD_NAME = 'dq1k0bo7h';
+        const CLOUDINARY_UPLOAD_PRESET = 'NOVAN TARJETA';
+        const CLOUDINARY_API_KEY = '659833896449642';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUG16lp5e47xP5l4acG7qoA3yzIzcwd18rp-d6pShWjtrsAHywu28NCp5cqVc4angj/exec';
+
+        const profileData = {
+            name: '',
+            age: '',
+            exp: '',
+            career: '',
+            work: '',
+            desc: '',
+            currency: '$',
+            price: '',
+            ig: '',
+            photo: null
+        };
+
+        const stateEdit = document.getElementById('state-edit');
+        const stateFinal = document.getElementById('state-final');
+        const profileForm = document.getElementById('profile-form');
         const navbar = document.getElementById('navbar');
+
+        // Scroll Navbar Effect
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
-        // Mobile Menu Logic
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('overlay');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+        // Initials Logic
+        function getInitials(name) {
+            const parts = name.trim().split(/\s+/);
+            if (parts.length === 0 || !parts[0]) return '';
+            let initials = parts[0][0];
+            if (parts.length > 1) {
+                initials += parts[parts.length - 1][0];
+            }
+            return initials.toUpperCase();
+        }
 
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            if (mobileMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
+        function updatePhotoArea(container, initialsSpan, imgElement, name, photo) {
+            if (!name && !photo) {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'flex';
+            if (photo) {
+                imgElement.src = photo;
+                imgElement.style.display = 'block';
+                initialsSpan.style.display = 'none';
             } else {
-                document.body.style.overflow = '';
+                imgElement.style.display = 'none';
+                initialsSpan.textContent = getInitials(name);
+                initialsSpan.style.display = 'block';
             }
         }
 
-        hamburger.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                // Close all items
-                faqItems.forEach(faq => {
-                    faq.classList.remove('active');
-                });
-
-                // Open clicked item if it wasn't active
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        // Intersection Observer for Fade-In
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
+        // Real-time Syncing
+        const inputs = {
+            name: document.getElementById('input-name'),
+            age: document.getElementById('input-age'),
+            exp: document.getElementById('input-exp'),
+            career: document.getElementById('input-career'),
+            work: document.getElementById('input-work'),
+            desc: document.getElementById('input-desc'),
+            currency: document.getElementById('input-currency'),
+            price: document.getElementById('input-price'),
+            ig: document.getElementById('input-ig')
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Stop observing once animated
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+        const mini = {
+            name: document.getElementById('mini-name'),
+            career: document.getElementById('mini-career'),
+            ig: document.getElementById('mini-ig'),
+            circle: document.getElementById('mini-circle'),
+            initials: document.getElementById('mini-initials'),
+            img: document.getElementById('mini-img')
+        };
 
-        const fadeElements = document.querySelectorAll('.fade-in');
-        fadeElements.forEach(el => observer.observe(el));
+        const final = {
+            name: document.getElementById('final-name'),
+            age: document.getElementById('final-age'),
+            career: document.getElementById('final-career'),
+            work: document.getElementById('final-work'),
+            desc: document.getElementById('final-desc'),
+            price: document.getElementById('final-price'),
+            igVal: document.getElementById('final-ig-val'),
+            igSection: document.getElementById('final-ig-section'),
+            expVal: document.getElementById('final-exp-val'),
+            expBlock: document.getElementById('exp-block'),
+            circle: document.getElementById('final-circle'),
+            initials: document.getElementById('final-initials'),
+            img: document.getElementById('final-img')
+        };
 
-        // Forms Logic
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUG16lp5e47xP5l4acG7qoA3yzIzcwd18rp-d6pShWjtrsAHywu28NCp5cqVc4angj/exec';
-        
-        const btnBuscar = document.getElementById('btn-buscar');
-        const btnAvisame = document.getElementById('btn-avisame');
-        const step1 = document.getElementById('step-1');
-        const step2 = document.getElementById('step-2');
-        const carreraInput = document.getElementById('carrera-input');
-        const emailInput = document.getElementById('email-input');
-        const formMessage = document.getElementById('form-message');
+        // Text input syncing
+        inputs.name.addEventListener('input', (e) => {
+            const val = e.target.value;
+            profileData.name = val;
+            mini.name.textContent = val || 'Tu Nombre';
+            updatePhotoArea(mini.circle, mini.initials, mini.img, val, profileData.photo);
+        });
 
-        btnBuscar.addEventListener('click', () => {
-            if (carreraInput.value.trim() === '') {
-                carreraInput.focus();
-                return;
+        inputs.career.addEventListener('input', (e) => {
+            mini.career.textContent = (e.target.value || 'CARRERA O ÁREA').toUpperCase();
+            profileData.career = e.target.value;
+        });
+
+        inputs.ig.addEventListener('input', (e) => {
+            const val = e.target.value;
+            mini.ig.textContent = val ? (val.startsWith('@') ? val : `@${val}`) : '@usuario';
+            profileData.ig = val;
+        });
+
+        inputs.desc.addEventListener('input', (e) => {
+            document.getElementById('desc-counter').textContent = `${e.target.value.length} / 180`;
+            profileData.desc = e.target.value;
+        });
+
+        inputs.age.addEventListener('input', (e) => profileData.age = e.target.value);
+        inputs.exp.addEventListener('input', (e) => profileData.exp = e.target.value);
+        inputs.work.addEventListener('input', (e) => profileData.work = e.target.value);
+        inputs.currency.addEventListener('change', (e) => profileData.currency = e.target.value);
+        inputs.price.addEventListener('input', (e) => profileData.price = e.target.value);
+
+        // Photo Handling
+        const photoInput = document.getElementById('input-photo');
+        const thumbContainer = document.getElementById('thumb-container');
+        const photoThumb = document.getElementById('photo-thumb');
+        const btnRemovePhoto = document.getElementById('btn-remove-photo');
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profileData.photo = event.target.result;
+                    photoThumb.src = event.target.result;
+                    thumbContainer.style.display = 'block';
+                    updatePhotoArea(mini.circle, mini.initials, mini.img, profileData.name, profileData.photo);
+                };
+                reader.readAsDataURL(file);
             }
-            step1.style.display = 'none';
-            step2.style.display = 'block';
-            emailInput.focus();
         });
 
-        // Also trigger on Enter
-        carreraInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') btnBuscar.click();
+        btnRemovePhoto.addEventListener('click', () => {
+            profileData.photo = null;
+            thumbContainer.style.display = 'none';
+            photoInput.value = '';
+            updatePhotoArea(mini.circle, mini.initials, mini.img, profileData.name, null);
         });
 
-        btnAvisame.addEventListener('click', async () => {
-            const email = emailInput.value.trim();
-            const carrera = carreraInput.value.trim();
+        // Form Submit -> Final Card
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            renderFinalCard();
+            transitionTo('final');
+        });
+
+        function renderFinalCard() {
+            final.name.textContent = profileData.name;
+            final.age.textContent = profileData.age ? `${profileData.age} años` : '';
+            final.career.textContent = profileData.career.toUpperCase();
+            final.work.textContent = profileData.work;
+            final.desc.textContent = `"${profileData.desc}"`;
+            final.price.textContent = `${profileData.currency} ${profileData.price}`;
+
+            if (profileData.ig) {
+                final.igVal.textContent = profileData.ig.startsWith('@') ? profileData.ig : `@${profileData.ig}`;
+                final.igSection.style.display = 'block';
+            } else {
+                final.igSection.style.display = 'none';
+            }
+
+            if (profileData.exp) {
+                final.expVal.textContent = profileData.exp;
+                final.expBlock.style.display = 'block';
+            } else {
+                final.expBlock.style.display = 'none';
+            }
+
+            updatePhotoArea(final.circle, final.initials, final.img, profileData.name, profileData.photo);
+        }
+
+        // Transitions
+        document.getElementById('btn-edit').addEventListener('click', () => {
+            transitionTo('edit');
+        });
+
+        function transitionTo(state) {
+            const target = state === 'final' ? stateFinal : stateEdit;
+            const current = state === 'final' ? stateEdit : stateFinal;
+
+            current.style.opacity = '0';
+            setTimeout(() => {
+                current.style.display = 'none';
+                target.style.display = (state === 'final' ? 'block' : 'grid');
+                window.scrollTo(0, 0);
+                setTimeout(() => {
+                    target.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        // --- EXPORTACIÓN Y SUBIDA ---
+        async function uploadToCloudinary(blob) {
+            const formData = new FormData();
+            formData.append('file', blob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            formData.append('api_key', CLOUDINARY_API_KEY);
+            formData.append('folder', 'novan-tarjetas');
             
-            if (!email) {
-                emailInput.focus();
-                return;
-            }
+            const response = await fetch(
+                `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+                { method: 'POST', body: formData }
+            );
+            
+            const data = await response.json();
+            return data.secure_url;
+        }
 
-            btnAvisame.textContent = 'Enviando...';
-            btnAvisame.disabled = true;
+        document.getElementById('btn-download').addEventListener('click', async () => {
+            const btn = document.getElementById('btn-download');
+            const card = document.getElementById('card-to-capture');
+            
+            // 1. Estado inicial del botón
+            btn.textContent = 'GENERANDO...';
+            btn.disabled = true;
 
             try {
-                // Using JSON and no-cors for silent POST to Apps Script
-                await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        carrera: carrera, 
-                        email: email, 
-                        pagina: 'estudiantes' 
-                    })
+                // 2. Captura con html2canvas
+                const canvas = await html2canvas(card, {
+                    scale: 2.25,
+                    width: card.offsetWidth,
+                    height: card.scrollHeight,
+                    windowWidth: card.offsetWidth,
+                    windowHeight: card.scrollHeight,
+                    backgroundColor: '#0A0A0A',
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false
                 });
 
-                // Since mode is no-cors, we won't get a readable response. Assume success.
-                formMessage.style.color = 'var(--red-primary)';
-                formMessage.textContent = '¡Listo! Te avisaremos pronto.';
-                btnAvisame.style.display = 'none';
-                emailInput.disabled = true;
+                // 3. Exportar PNG y descargar
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+                const dataUrl = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.download = `novan-tarjeta-${profileData.name.replace(/\s+/g, '-').toLowerCase() || 'profesional'}.png`;
+                link.href = dataUrl;
+                link.click();
 
-            } catch (error) {
-                console.error('Error enviando formulario:', error);
-                formMessage.style.color = 'var(--white-warm)';
-                formMessage.textContent = 'Hubo un error. Por favor, intentá nuevamente.';
-                btnAvisame.textContent = 'AVISAME →';
-                btnAvisame.disabled = false;
+                // 4. Subir a Cloudinary
+                
+                let cloudinaryUrl = '';
+                try {
+                    cloudinaryUrl = await uploadToCloudinary(blob);
+                } catch(e) {
+                    console.error('Error subiendo a Cloudinary:', e);
+                }
+
+                // 5. Enviar a Google Sheets
+                const payload = {
+                    timestamp: new Date().toLocaleString('es-AR'),
+                    nombre: profileData.name,
+                    edad: profileData.age || '',
+                    carrera: profileData.career,
+                    trabajo: profileData.work,
+                    descripcion: profileData.desc,
+                    precio: profileData.currency + ' ' + profileData.price,
+                    instagram: profileData.ig || '',
+                    imagen_url: cloudinaryUrl,
+                    pagina: 'tarjeta'
+                };
+
+                if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('REEMPLAZAR')) {
+                    try {
+                        await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            body: JSON.stringify(payload)
+                        });
+                    } catch(e) {
+                        console.error('Error enviando a Sheets:', e);
+                    }
+                } else {
+                    console.log('Datos listos para enviar a Sheets (URL pendiente):', payload);
+                }
+            } catch (err) {
+                console.error('Error generando tarjeta:', err);
+                alert('Hubo un problema al generar la tarjeta. Intentá nuevamente.');
+            } finally {
+                // 6. Restaurar botón
+                btn.textContent = 'DESCARGAR MI TARJETA ↓';
+                btn.disabled = false;
             }
         });
-
-        emailInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') btnAvisame.click();
-        });
-
     </script>
-<div id="modalResena" style="display:none; position:fixed; inset:0; 
-background:rgba(0,0,0,0.85); z-index:9999; align-items:center; 
-justify-content:center;">
-  <div style="background:#111111; border:1px solid rgba(255,255,255,0.08); 
-  border-radius:20px; padding:40px 36px; width:min(480px,90vw); 
-  position:relative;">
-    <button onclick="cerrarModal()" style="position:absolute; top:16px; 
-    right:20px; background:none; border:none; color:#6B7280; 
-    font-size:22px; cursor:pointer;">×</button>
-    <h3 style="font-family:Inter,sans-serif; font-size:18px; 
-    color:#F5F0EB; margin:0 0 4px;">¿Cómo fue tu sesión?</h3>
-    <p style="font-family:Inter,sans-serif; font-size:13px; 
-    color:#6B7280; margin:0 0 24px;">Tu reseña ayuda a otros 
-    estudiantes a animarse.</p>
-    <div style="display:flex; flex-direction:column; gap:12px;">
-      <input id="r-nombre" type="text" placeholder="Tu nombre y 
-      inicial (ej: Lucía F.)" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none;">
-      <input id="r-ciudad" type="text" placeholder="Tu ciudad" 
-      style="background:#1A1A1A; border:1px solid rgba(255,255,255,0.08); 
-      border-radius:8px; padding:12px 16px; color:#F5F0EB; 
-      font-family:Inter,sans-serif; font-size:14px; width:100%; 
-      box-sizing:border-box; outline:none;">
-      <input id="r-carrera" type="text" placeholder="¿Qué carrera 
-      consultaste?" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none;">
-      <div id="r-estrellas" style="display:flex; gap:6px; font-size:26px; 
-      cursor:pointer; color:#2A2A2A;">
-        <span onclick="setStars(1)">★</span>
-        <span onclick="setStars(2)">★</span>
-        <span onclick="setStars(3)">★</span>
-        <span onclick="setStars(4)">★</span>
-        <span onclick="setStars(5)">★</span>
-      </div>
-      <textarea id="r-texto" placeholder="Contá cómo fue la sesión..." 
-      rows="4" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none; 
-      resize:none;"></textarea>
-      <button onclick="publicarResena()" style="background:#CC2936; 
-      color:white; border:none; border-radius:8px; padding:14px 28px; 
-      font-family:Inter,sans-serif; font-size:14px; font-weight:700; 
-      width:100%; cursor:pointer;">Publicar reseña</button>
-    </div>
-  </div>
-</div>
-
-<script>
-var starsSelected = 0;
-
-function abrirModal() {
-  var m = document.getElementById('modalResena');
-  m.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-
-function cerrarModal() {
-  var m = document.getElementById('modalResena');
-  m.style.display = 'none';
-  document.body.style.overflow = '';
-  starsSelected = 0;
-  setStars(0);
-  document.getElementById('r-nombre').value = '';
-  document.getElementById('r-ciudad').value = '';
-  document.getElementById('r-carrera').value = '';
-  document.getElementById('r-texto').value = '';
-}
-
-function setStars(n) {
-  starsSelected = n;
-  var spans = document.querySelectorAll('#r-estrellas span');
-  spans.forEach(function(s, i) {
-    s.style.color = i < n ? '#CC2936' : '#2A2A2A';
-  });
-}
-
-function publicarResena() {
-  var nombre = document.getElementById('r-nombre').value.trim();
-  var ciudad = document.getElementById('r-ciudad').value.trim();
-  var carrera = document.getElementById('r-carrera').value.trim();
-  var texto = document.getElementById('r-texto').value.trim();
-  
-  if (!nombre) { 
-    document.getElementById('r-nombre').style.borderColor = '#CC2936'; 
-    return; 
-  }
-  if (!texto) { 
-    document.getElementById('r-texto').style.borderColor = '#CC2936'; 
-    return; 
-  }
-
-  var meses = ['ene','feb','mar','abr','may','jun',
-                'jul','ago','sep','oct','nov','dic'];
-  var hoy = new Date();
-  var fecha = hoy.getDate() + ' ' + meses[hoy.getMonth()] + 
-              ' ' + hoy.getFullYear();
-  var estrellas = '★'.repeat(starsSelected || 5);
-  var subtitulo = ciudad ? ciudad : '';
-  if (carrera) subtitulo += subtitulo ? ' · ' + carrera : carrera;
-
-  var card = document.createElement('div');
-  card.style.cssText = 'background:#111111; border:1px solid ' +
-    'rgba(255,255,255,0.07); border-radius:16px; padding:28px 24px; ' +
-    'flex-shrink:0; width:320px;';
-  card.innerHTML = 
-    '<div style="background:rgba(204,41,54,0.08); border-radius:8px; ' +
-    'padding:8px 12px; display:flex; justify-content:space-between; ' +
-    'margin-bottom:12px;">' +
-    '<span style="font-family:Inter,sans-serif; font-size:12px; ' +
-    'font-weight:700; color:#F5F0EB;">' + nombre + 
-    (carrera ? ' · Sesión ' + carrera : '') + '</span>' +
-    '<span style="font-family:Inter,sans-serif; font-size:11px; ' +
-    'color:#6B7280;">' + fecha + '</span></div>' +
-    '<div style="color:#CC2936; font-size:14px; margin-bottom:12px;">' + 
-    estrellas + '</div>' +
-    '<p style="font-family:Inter,sans-serif; font-size:14px; ' +
-    'color:#D1CBC4; line-height:1.6; margin:0 0 16px;">' + 
-    texto + '</p>' +
-    '<strong style="font-family:Inter,sans-serif; font-size:13px; ' +
-    'color:#F5F0EB;">' + nombre + '</strong>' +
-    (subtitulo ? '<p style="font-family:Inter,sans-serif; font-size:12px; ' +
-    'color:#6B7280; margin:4px 0 0;">' + subtitulo + '</p>' : '');
-
-  var btnCard = document.getElementById('btnAgregarResena');
-  btnCard.parentNode.insertBefore(card, btnCard);
-  cerrarModal();
-}
-
-document.getElementById('modalResena')
-  .addEventListener('click', function(e) {
-    if (e.target === this) cerrarModal();
-  });
-</script>
 </body>
 </html>
+
+<!--
+// APPS SCRIPT ACTUALIZADO — reemplazar en script.google.com
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Tarjetas");
+  if (!sheet) {
+    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet("Tarjetas");
+    sheet.appendRow(["Timestamp", "Nombre", "Edad", "Carrera", "Trabajo", 
+                     "Descripción", "Precio", "Instagram", "Imagen URL"]);
+  }
+  try {
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp || new Date(),
+      data.nombre || '',
+      data.edad || '',
+      data.carrera || '',
+      data.trabajo || '',
+      data.descripcion || '',
+      data.precio || '',
+      data.instagram || '',
+      data.imagen_url || ''
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+-->
