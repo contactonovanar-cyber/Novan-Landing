@@ -5,1160 +5,466 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Novan - Orientación Vocacional Real</title>
     <meta name="description" content="Antes de elegir tu carrera, hablá con alguien que ya la vive. Videollamadas de 30 minutos con profesionales jóvenes.">
-    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* Variables de Color y Tipografía */
+        * { font-family: 'Inter', sans-serif !important; }
+        .logo, .logo *, .footer-logo, .footer-logo *, #novanTicker, #novanTicker * { font-family: 'Cormorant Garamond', Georgia, serif !important; }
+
+        /* Base styles */
         :root {
             --bg-main: #0A0A0A;
             --red-primary: #CC2936;
             --red-hover: #E8303D;
-            --red-muted: #6B1219;
             --white-main: #FFFFFF;
             --white-warm: #F5F0EB;
             --grey-sec: #6B7280;
-            --grey-dark: #1A1A1A;
-            --grey-mid: #2A2A2A;
             --bg-alt: #111111;
             
             --font-display: 'Cormorant Garamond', Georgia, serif;
             --font-body: 'Inter', -apple-system, sans-serif;
-            
-            --max-width: 1200px;
-            --text-max-width: 700px;
         }
 
-        /* Resets & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: var(--bg-main); color: var(--white-warm); 
+            font-family: var(--font-body); font-weight: 300; line-height: 1.6; 
+            overflow-x: hidden; -webkit-font-smoothing: antialiased; 
         }
+        h1, h2, h3, h4, .display-font { font-family: var(--font-display); font-weight: 700; color: var(--white-main); line-height: 1.1; }
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        input { font-family: var(--font-body); font-size: 16px; }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--white-warm);
-            font-family: var(--font-body);
-            font-weight: 300;
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, h4, h5, h6, .display-font {
-            font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--white-main);
-            line-height: 1.1;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        input {
-            font-family: var(--font-body);
-            font-size: 16px; /* Evita zoom en iOS */
-        }
-
-        /* SVG Noise Filter Container */
-        .svg-filters {
-            position: absolute;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-        }
-
-        /* Utilidades Globales */
-        .container {
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .eyebrow {
-            color: var(--red-primary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .section-padding {
-            padding: 120px 0;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Botones */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            border-radius: 4px;
-            font-family: var(--font-body);
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            border: none;
-            outline: none;
-        }
-
-        .btn-primary {
-            background-color: var(--red-primary);
-            color: var(--white-main);
-            border: 1px solid var(--red-primary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--red-hover);
-            border-color: var(--red-hover);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--red-primary);
-            border: 1px solid var(--red-primary);
-        }
-
-        .btn-secondary:hover {
-            background-color: rgba(204, 41, 54, 0.1);
-        }
-
-        /* 1. Navbar */
+        /* NAVBAR */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: background-color 0.3s ease, padding 0.3s ease;
-            padding: 24px 0;
-            background-color: transparent;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: rgba(242,240,237,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.3s ease;
         }
-
+        .logo { font-family: var(--font-display); font-size: 26px; color: #1A1A1A; transition: color 0.3s; }
+        .logo span { color: var(--red-primary); }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { font-family: var(--font-body); font-size: 14px; color: #1A1A1A; font-weight: 400; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--red-primary); }
+        .nav-btn { background: #1A1A1A; color: #F2F0ED; border-radius: 8px; padding: 10px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 600; display: inline-block; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--red-primary); color: var(--white-main); }
+        
+        /* NAVBAR SCROLLED STATE (DARK) */
         .navbar.scrolled {
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 16px 0;
+            background: rgba(10,10,10,0.92);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .navbar.scrolled .logo { color: var(--white-main); }
+        .navbar.scrolled .nav-links a { color: var(--grey-sec); }
+        .navbar.scrolled .nav-links a:hover { color: var(--white-main); }
+        .navbar.scrolled .nav-btn { background: var(--red-primary); color: var(--white-main); }
+        .navbar.scrolled .nav-btn:hover { background: var(--red-hover); }
+        
+        .hamburger { display: none; color: #1A1A1A; font-size: 22px; cursor: pointer; background: none; border: none; transition: color 0.3s; }
+        .navbar.scrolled .hamburger { color: var(--white-main); }
+        .mobile-menu { display: none; position: absolute; top: 64px; left: 0; width: 100%; background: var(--bg-alt); padding: 24px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-direction: column; gap: 20px; z-index: 99; }
+        .mobile-menu.active { display: flex; }
+        
+        @media (max-width: 768px) {
+            .navbar { padding: 0 24px; }
+            .nav-links, .nav-btn-desktop { display: none; }
+            .hamburger { display: block; }
         }
 
-        .logo {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: var(--white-main);
-            letter-spacing: 0.02em;
-        }
+        /* HERO */
+        .hero { min-height: 100vh; display: grid; grid-template-columns: 55% 45%; align-items: center; overflow: hidden; padding: 0; position: relative; background: #F2F0ED; }
+        @media (max-width: 768px) { .hero { grid-template-columns: 1fr; padding-top: 40px; } }
+        
+        .hero-left { z-index: 1; max-width: 560px; padding: 140px 48px 80px 48px; display: flex; flex-direction: column; justify-content: center; }
+        @media (max-width: 768px) { .hero-left { padding: 140px 24px 80px 24px; } }
+        
+        .eyebrow { display: flex; align-items: center; gap: 10px; }
+        .eyebrow-line { width: 32px; height: 2px; background: var(--red-primary); }
+        .eyebrow-text { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.15em; color: var(--red-primary); text-transform: uppercase; }
+        
+        .hero h1 { font-size: clamp(44px, 5.5vw, 76px); color: #0A0A0A; line-height: 1.0; margin-top: 20px; }
+        .hero-subtitle { font-family: var(--font-body); font-weight: 400; font-size: clamp(15px, 1.8vw, 17px); color: #6B7280; margin-top: 16px; line-height: 1.6; }
+        
+        .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+        .pill { background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12); border-radius: 999px; padding: 7px 16px; font-family: var(--font-body); font-size: 13px; color: #1A1A1A; display: inline-flex; align-items: center; gap: 6px; }
+        
+        .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+        .hero-btn-primary { background: var(--red-primary); color: var(--white-main); border-radius: 10px; padding: 14px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s ease; display: inline-block; }
+        .hero-btn-primary:hover { background: var(--red-hover); }
+        .hero-btn-secondary { background: transparent; border: 1px solid rgba(204,41,54,0.6); color: var(--red-primary); border-radius: 10px; padding: 14px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: inline-block; }
+        .hero-btn-secondary:hover { background: rgba(204,41,54,0.06); }
+        
+        .hero-microcopy { font-family: var(--font-body); font-size: 11px; letter-spacing: 0.12em; color: #9CA3AF; margin-top: 20px; text-transform: uppercase; }
 
-        .logo span {
-            color: var(--red-primary);
-        }
+        .hero-right { position: relative; overflow: hidden; height: 100%; display: flex; align-items: center; justify-content: flex-end; }
+        @media (max-width: 768px) { .hero-right { display: none; } }
+        
+        .hero-deco-text { font-family: var(--font-display); font-size: clamp(180px, 22vw, 320px); color: #CC2936; position: absolute; right: -20px; left: auto; top: 50%; transform: translateY(-50%); white-space: nowrap; letter-spacing: -0.04em; line-height: 1; user-select: none; pointer-events: none; opacity: 1; }
+        
+        .hero-stats-card { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(10,10,10,0.92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px 20px; width: 180px; box-shadow: 0 32px 80px rgba(0,0,0,0.25); }
+        .stat-item { text-align: center; }
+        .stat-separator { height: 1px; background: rgba(255,255,255,0.07); margin: 14px 0; }
+        .stat-num-1 { font-family: var(--font-display); font-weight: 700; font-size: 32px; color: var(--red-primary); line-height: 1; }
+        .stat-num-2 { font-family: var(--font-display); font-weight: 700; font-size: 44px; color: var(--red-primary); line-height: 1; }
+        .stat-label { font-family: var(--font-body); font-size: 10px; color: var(--grey-sec); margin-top: 4px; }
 
-        .nav-links {
-            display: none;
-            gap: 32px;
-            align-items: center;
-        }
+        /* HERO FOOTER */
+        .hero-footer { position: absolute; bottom: 0; left: 0; width: 100%; border-top: 1px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: repeat(3, 1fr); z-index: 2; }
+        @media (max-width: 768px) { .hero-footer { position: relative; grid-template-columns: 1fr; margin-top: 60px; } .hero { padding-bottom: 0; } }
+        
+        .hf-block { padding: 24px 32px; }
+        .hf-block-1 { background: #1A1A1A; }
+        .hf-block-2 { background: #1A1A1A; border-left: 1px solid rgba(255,255,255,0.06); border-right: 1px solid rgba(255,255,255,0.06); }
+        .hf-block-3 { background: #1A1A1A; }
+        @media (max-width: 768px) { .hf-block-2 { border-left: none; border-right: none; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); } }
+        .hf-title { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--white-main); }
+        .hf-subtitle { font-family: var(--font-body); font-size: 13px; color: var(--grey-sec); margin-top: 2px; }
 
-        .nav-links a {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--white-warm);
-        }
+        /* COMO FUNCIONA */
+        .como-funciona { background: var(--bg-alt); padding: 100px 48px; }
+        @media (max-width: 768px) { .como-funciona { padding: 64px 24px; } }
+        .cf-eyebrow { font-family: var(--font-body); font-size: 11px; color: var(--red-primary); letter-spacing: 0.1em; text-transform: uppercase; }
+        .cf-title { font-size: clamp(40px, 5vw, 64px); color: var(--white-main); margin-top: 8px; line-height: 1; }
+        .cf-subtitle { font-size: clamp(40px, 5vw, 64px); color: var(--red-primary); line-height: 1; }
+        
+        .cf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+        @media (max-width: 768px) { .cf-grid { grid-template-columns: 1fr; } }
+        .cf-card { background: var(--bg-main); border-radius: 16px; padding: 32px 28px; border-top: 3px solid var(--red-primary); }
+        .cf-num { font-family: var(--font-display); font-weight: 700; font-size: 56px; color: rgba(204,41,54,0.2); line-height: 1; }
+        .cf-card-title { font-family: var(--font-body); font-weight: 600; font-size: 18px; color: var(--white-main); margin-top: 12px; }
+        .cf-card-desc { font-family: var(--font-body); font-size: 14px; color: var(--grey-sec); margin-top: 8px; line-height: 1.5; }
 
-        .nav-links a:hover {
-            color: var(--red-primary);
-        }
+        /* FORMULARIO ESTUDIANTES */
+        .estudiantes-form { background: var(--bg-main); padding: 100px 48px; text-align: center; }
+        @media (max-width: 768px) { .estudiantes-form { padding: 64px 24px; } }
+        .form-container { max-width: 560px; margin: 0 auto; }
+        .form-eyebrow { font-family: var(--font-body); font-size: 11px; color: var(--red-primary); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 12px; }
+        .form-title { font-size: clamp(32px, 4vw, 52px); color: var(--white-main); line-height: 1.1; }
+        .form-subtitle { font-family: var(--font-body); font-size: 14px; color: var(--grey-sec); margin-top: 12px; margin-bottom: 40px; }
+        
+        .input-group { margin-bottom: 16px; text-align: left; }
+        .form-input { background: var(--bg-alt); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; color: var(--white-warm); font-family: var(--font-body); font-size: 14px; width: 100%; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
+        .form-input:focus { border-color: var(--red-primary); }
+        .form-btn { background: var(--red-primary); color: var(--white-main); border-radius: 10px; padding: 16px; font-family: var(--font-body); font-size: 15px; font-weight: 600; width: 100%; border: none; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+        .form-btn:hover { background: var(--red-hover); }
+        .form-message { margin-top: 16px; font-family: var(--font-body); font-size: 14px; }
 
-        .hamburger {
-            display: block;
-            cursor: pointer;
-            z-index: 1001;
-        }
+        /* CTA PROFESIONALES */
+        .cta-prof { background: var(--bg-alt); padding: 80px 48px; text-align: center; }
+        @media (max-width: 768px) { .cta-prof { padding: 56px 24px; } }
+        .cta-title { font-size: clamp(32px, 4vw, 52px); color: var(--white-main); line-height: 1.1; }
+        .cta-subtitle { font-family: var(--font-body); font-size: 16px; color: var(--grey-sec); margin-top: 12px; max-width: 480px; margin-left: auto; margin-right: auto; }
 
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background-color: var(--white-main);
-            margin: 5px 0;
-            transition: 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-        .hamburger.active span:nth-child(2) {
+        /* FOOTER */
+        .footer { background: var(--bg-main); border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        @media (max-width: 768px) { .footer { padding: 32px 24px; flex-direction: column; text-align: center; justify-content: center; } }
+        .footer-left { display: flex; align-items: center; gap: 12px; }
+        @media (max-width: 768px) { .footer-left { flex-direction: column; } }
+        .footer-logo { font-family: var(--font-display); font-size: 20px; color: var(--white-main); }
+        .footer-logo span { color: var(--red-primary); }
+        .footer-text { font-family: var(--font-body); font-size: 12px; color: var(--grey-sec); }
+        .footer-links { display: flex; gap: 16px; }
+        .footer-links a { font-family: var(--font-body); font-size: 12px; color: var(--grey-sec); }
+        .footer-links a:hover { color: var(--white-main); }
+        @keyframes fadeSlideIn {
+          from {
             opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 80%;
-            max-width: 320px;
-            height: 100vh;
-            background-color: var(--grey-dark);
-            z-index: 999;
-            padding: 100px 30px;
-            transition: right 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            border-left: 1px solid var(--grey-mid);
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-menu a {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--white-main);
-        }
-
-        .mobile-menu .btn {
-            margin-top: 20px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 998;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* 2. Hero */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-main);
-            overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            filter: url(#noiseFilter);
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: var(--grey-sec);
-            font-family: var(--font-body);
-            font-weight: 500;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .hero-eyebrow::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background-color: var(--red-primary);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 span {
-            color: var(--red-primary);
-        }
-
-        .hero-subtitle {
-            font-size: 1.15rem;
-            font-weight: 300;
-            color: var(--white-warm);
-            max-width: var(--text-max-width);
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 1.5rem;
-        }
-
-        .trust-signal {
-            color: var(--grey-sec);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            font-weight: 400;
-        }
-
-        .hero-bg-text {
-            position: absolute;
-            bottom: -5%;
-            right: -5%;
-            font-family: var(--font-display);
-            font-size: 15vw;
-            color: var(--white-main);
-            opacity: 0.03;
-            line-height: 1;
-            z-index: 1;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        /* 3. Problema */
-        .problema h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            max-width: var(--text-max-width);
-            margin-bottom: 1rem;
-        }
-
-        .problema h2 span {
-            color: var(--red-primary);
-        }
-
-        .problema-subtitle {
-            font-size: 1.1rem;
-            color: var(--white-warm);
-            max-width: var(--text-max-width);
-            margin-bottom: 4rem;
-        }
-
-        .problema-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .problema-card {
-            position: relative;
-        }
-
-        .problema-number {
-            font-family: var(--font-display);
-            font-size: 4rem;
-            color: var(--red-primary);
-            opacity: 0.3;
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .problema-card h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 1rem;
-        }
-
-        .problema-card p {
-            max-width: 400px;
-        }
-
-        /* 4. Cómo Funciona */
-        .como-funciona {
-            background-color: var(--bg-alt);
-        }
-
-        .como-funciona h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .step-card {
-            background-color: var(--grey-dark);
-            border: 1px solid var(--grey-mid);
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--red-muted);
-        }
-
-        .step-card h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 1rem;
-        }
-
-        /* 5. Diferenciadores */
-        .diferenciadores h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .diff-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .diff-item {
-            border-left: 3px solid var(--red-primary);
-            padding-left: 1.5rem;
-            max-width: 500px;
-        }
-
-        .diff-item h3 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--white-main);
-            margin-bottom: 0.5rem;
-        }
-
-        /* 6. Testimonios */
-        .testimonios {
-            background-color: var(--bg-alt);
-        }
-
-        .testimonios h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .testimonio-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .testimonio-card {
-            background-color: var(--grey-dark);
-            border: 1px solid var(--grey-mid);
-            border-radius: 12px;
-            padding: 2.5rem;
-            position: relative;
-            transition: border-color 0.3s ease;
-        }
-
-        .testimonio-card:hover {
-            border-color: var(--red-primary);
-        }
-
-        .quote-icon {
-            color: var(--red-primary);
-            font-size: 3rem;
-            font-family: var(--font-display);
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .testimonio-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            color: var(--white-warm);
-        }
-
-        .testimonio-author {
-            font-family: var(--font-body);
-            font-weight: 600;
-            color: var(--white-main);
-        }
-
-        .testimonio-detail {
-            color: var(--grey-sec);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-        }
-
-        .cta-link {
-            color: var(--white-main);
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .cta-link:hover {
-            color: var(--red-primary);
-        }
-
-        /* 7. FAQ */
-        .faq h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 4rem;
-        }
-
-        .faq-container {
-            max-width: 800px;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--grey-mid);
-            padding: 1.5rem 0;
-        }
-
-        .faq-item:first-child {
-            border-top: 1px solid var(--grey-mid);
-        }
-
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--white-main);
-            font-size: 1.1rem;
-        }
-
-        .faq-icon {
-            font-size: 1.5rem;
-            color: var(--red-primary);
-            transition: transform 0.3s ease;
-            font-weight: 300;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, margin-top 0.3s ease;
-            color: var(--white-warm);
-        }
-
-        .faq-item.active .faq-answer {
-            margin-top: 1rem;
-            max-height: 200px;
-        }
-
-        /* 8. Estudiantes & CTA Profesionales */
-        /* Bloque A */
-        .form-estudiantes {
-            background-color: var(--bg-alt);
-            border-top: 2px solid var(--red-primary);
-            padding: 100px 0;
-        }
-
-        .form-estudiantes h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 2rem;
-        }
-
-        .form-wrapper {
-            max-width: 600px;
-        }
-
-        .form-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--grey-mid);
-            color: var(--white-main);
-            font-size: 22px;
-            padding: 12px 0;
-            font-family: var(--font-body);
-            transition: border-color 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-bottom-color: var(--red-primary);
-        }
-
-        .form-input::placeholder {
-            color: var(--grey-sec);
-        }
-
-        .form-note {
-            color: var(--grey-sec);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            display: block;
-        }
-
-        .form-message {
-            margin-top: 1rem;
-            font-weight: 500;
-        }
-
-        /* Bloque B */
-        .cta-profesionales {
-            background: linear-gradient(to bottom, var(--bg-main), var(--grey-dark));
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-profesionales h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-subtitle {
-            font-size: 1.15rem;
-            margin-bottom: 3rem;
-            color: var(--white-warm);
-        }
-
-        .mini-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
-
-        .mini-feature {
-            font-weight: 500;
-            color: var(--white-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .mini-feature::before {
-            content: "•";
-            color: var(--red-primary);
-            font-size: 1.5rem;
-            line-height: 0.5;
-        }
-
-        /* 9. Footer */
-        .footer {
-            background-color: #050505;
-            padding: 80px 0 40px;
-            border-top: 1px solid var(--grey-mid);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .footer-tagline {
-            color: var(--grey-sec);
-            font-size: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--white-warm);
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: var(--red-primary);
-        }
-
-        .footer-bottom {
-            margin-top: 4rem;
-            color: var(--grey-sec);
-            font-size: 0.85rem;
-            text-align: center;
-        }
-
-        /* Breakpoints Responsive */
-        @media (min-width: 480px) {
-            .hero-buttons {
-                flex-direction: row;
-            }
-            .form-input-group {
-                flex-direction: row;
-                align-items: flex-end;
-            }
-            .form-input-group .btn {
-                white-space: nowrap;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .problema-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .steps-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .diff-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .diff-item:not(:last-child) {
-                border-right: 1px solid var(--grey-dark);
-                padding-right: 1.5rem;
-            }
-            .testimonio-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .mini-features {
-                flex-direction: row;
-                gap: 3rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .nav-links {
-                display: flex;
-            }
-            .hamburger {
-                display: none;
-            }
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
-            .footer-bottom {
-                text-align: left;
-            }
-            .diff-item {
-                padding-left: 2rem;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .section-padding, .form-estudiantes, .cta-profesionales {
-                padding: 140px 0;
-            }
+            transform: translateY(-45%) translateX(30px);
+          }
+          to {
+            opacity: 0.22;
+            transform: translateY(-50%) translateX(0);
+          }
+        }
+        @keyframes typing-mask {
+          0%, 10% { width: 100%; }
+          40%, 65% { width: 0%; }
+          90%, 100% { width: 100%; }
+        }
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: #CC2936; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SVG Filters -->
-    <svg class="svg-filters">
-        <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch"/>
-        </filter>
-    </svg>
-
-    <!-- 1. Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo"><span>N</span>ovan</a>
-            <div class="nav-links">
-                <a href="#como-funciona">Cómo funciona</a>
-                <a href="#faq">FAQ</a>
-                <a href="#cta-profesionales">Soy profesional</a>
-                <a href="#hero" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Empezar &rarr;</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="logo"><span>N</span>ovan</a>
+        <div class="nav-links">
+            <a href="#como-funciona">Cómo funciona</a>
+            <a href="#faq">FAQ</a>
+            <a href="profesionales.html">Soy profesional</a>
+        </div>
+        <a href="#estudiantes" class="nav-btn nav-btn-desktop">Empezar &rarr;</a>
+        <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('active')">&#9776;</button>
+        
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#como-funciona" style="color:var(--white-main); font-family:var(--font-body); font-size:16px;">Cómo funciona</a>
+            <a href="#faq" style="color:var(--white-main); font-family:var(--font-body); font-size:16px;">FAQ</a>
+            <a href="profesionales.html" style="color:var(--white-main); font-family:var(--font-body); font-size:16px;">Soy profesional</a>
+            <a href="#estudiantes" class="nav-btn" style="text-align:center; margin-top:8px;">Empezar &rarr;</a>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="overlay" id="overlay"></div>
-    <div class="mobile-menu" id="mobile-menu">
-        <a href="#como-funciona" class="mobile-link">Cómo funciona</a>
-        <a href="#faq" class="mobile-link">FAQ</a>
-        <a href="#cta-profesionales" class="mobile-link">Soy profesional</a>
-        <a href="#hero" class="btn btn-primary mobile-link" style="width: 100%;">Empezar &rarr;</a>
-    </div>
-
-    <!-- 2. Hero -->
-    <section class="hero" id="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <div class="hero-eyebrow">ORIENTACIÓN VOCACIONAL REAL</div>
-                <h1>Hablá con alguien que ya vive lo que querés estudiar.</h1>
-                <p class="hero-subtitle">30 minutos. Un profesional joven. La verdad sobre tu carrera.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 32px;">
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">🎓 Elegís carrera este año</div>
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">😰 No sabés qué estudiar</div>
-                    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 8px 16px; gap: 12px; display: inline-flex; font-family: var(--font-body); font-size: 13px; color: #F5F0EB;">🔄 Querés cambiar de carrera</div>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#form-estudiantes" class="btn btn-primary">Quiero orientación &rarr;</a>
-                    <a href="#cta-profesionales" class="btn btn-secondary">Soy profesional &rarr;</a>
-                </div>
-                <div class="trust-signal">100% HUMANO &middot; SIN IA &middot; SIN TESTS</div>
+    <!-- 1. HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="eyebrow">
+                <div class="eyebrow-line"></div>
+                <div class="eyebrow-text">ORIENTACIÓN VOCACIONAL REAL</div>
             </div>
-        </div>
-        <div class="hero-bg-text">NOVAN</div>
-    </section>
-
-    <!-- 3. Problema -->
-    <section class="problema section-padding" id="problema">
-        <div class="container">
-            <span class="fade-in" style="font-family: var(--font-body); font-size: 11px; letter-spacing: 0.15em; color: #CC2936; font-weight: 600; text-transform: uppercase; margin-bottom: 32px; display: block;">EL PROBLEMA REAL</span>
+            <h1>Hablá con<br>quien ya<br>lo vive.</h1>
+            <p class="hero-subtitle">30 minutos. Un profesional joven.<br>La verdad sobre tu carrera.</p>
             
-            <div class="fade-in" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px;">
-                <!-- BLOQUE 1 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.12); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-                        <path d="M3 3v5h5"></path>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 42px; color: #CC2936; line-height: 1;">1 de cada 4</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">cambia de carrera</div>
+            <div class="pills">
+                <div class="pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" 
+                  stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                  Elegís carrera este año
                 </div>
-
-                <!-- BLOQUE 2 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.4); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="15" y1="9" x2="9" y2="15"></line>
-                        <line x1="9" y1="9" x2="15" y2="15"></line>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 56px; color: #CC2936; line-height: 1;">73%</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">nunca la termina</div>
+                <div class="pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" 
+                  stroke-linejoin="round" style="flex-shrink:0;">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 8v4M12 16h.01"/>
+                  </svg>
+                  No sabés qué estudiar
                 </div>
-
-                <!-- BLOQUE 3 -->
-                <div style="background: #111111; padding: 40px 32px; border: 1px solid rgba(204,41,54,0.12); border-radius: 12px; text-align: center;">
-                    <svg style="margin: 0 auto 16px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <div style="font-family: var(--font-display); font-weight: 700; font-size: 42px; color: #CC2936; line-height: 1;">5 años</div>
-                    <div style="font-family: var(--font-body); font-size: 12px; color: #6B7280; margin-top: 8px;">perdidos eligiendo mal</div>
-                </div>
-            </div>
-
-            <!-- 4. UNA SOLA LÍNEA de texto debajo del grid -->
-            <p class="fade-in" style="font-family: var(--font-body); font-size: 15px; color: #6B7280; text-align: center; margin-top: 32px; margin-bottom: 64px;">No es falta de inteligencia. Es falta de información real.</p>
-
-            <div class="problema-grid">
-                <div class="problema-card fade-in">
-                    <div class="problema-number">01</div>
-                    <h3>Tus viejos estudiaron en otra época</h3>
-                    <p>Te aconsejan con buena intención, pero el mercado cambió. Lo que funcionó hace 20 años hoy no existe.</p>
-                </div>
-                <div class="problema-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="problema-number">02</div>
-                    <h3>Google no te dice cómo se siente</h3>
-                    <p>Podés buscar el plan de estudios, pero nadie te cuenta si vas a amar o sufrir esos 5 años.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Cómo Funciona -->
-    <section class="como-funciona section-padding" id="como-funciona">
-        <div class="container">
-            <span class="eyebrow fade-in">ASÍ DE SIMPLE</span>
-            <h2 class="fade-in">Tres pasos. Una decisión mejor.</h2>
-            <div class="steps-grid">
-                <div class="step-card fade-in">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">1</div>
-                    <h3>Elegí una carrera</h3>
-                    <p>Buscá entre más de 30 profesiones y encontrá a alguien que ya la vive.</p>
-                </div>
-                <div class="step-card fade-in" style="transition-delay: 0.2s;">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">2</div>
-                    <h3>Agendá tu llamada</h3>
-                    <p>Elegí el profesional, el día y la hora. 30 minutos que te ahorran años de duda.</p>
-                </div>
-                <div class="step-card fade-in" style="transition-delay: 0.4s;">
-                    <div style="font-family: var(--font-display); font-size: 48px; color: var(--red-primary); opacity: 0.3; line-height: 1; margin-bottom: 1rem;">3</div>
-                    <h3>Conversá en serio</h3>
-                    <p>Preguntale todo. Cómo es el día a día, cuánto se gana, qué haría distinto. Sin filtro.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Diferenciadores -->
-    <section class="diferenciadores section-padding" id="diferenciadores">
-        <div class="container">
-            <span class="eyebrow fade-in">¿POR QUÉ NOVAN?</span>
-            <h2 class="fade-in">Esto no es un test vocacional.</h2>
-            <div class="diff-grid">
-                <div class="diff-item fade-in">
-                    <h3>100% humano</h3>
-                    <p>Nada de inteligencia artificial. Hablás con una persona real que vivió lo que vos estás por decidir.</p>
-                </div>
-                <div class="diff-item fade-in" style="transition-delay: 0.2s;">
-                    <h3>Profesionales de 1 a 5 años</h3>
-                    <p>Gente joven que recuerda perfecto lo que es estar en tu lugar. No gurúes de 50 años.</p>
-                </div>
-                <div class="diff-item fade-in" style="transition-delay: 0.4s;">
-                    <h3>30 minutos que cambian tu decisión</h3>
-                    <p>Una conversación honesta vale más que 100 horas googleando planes de estudio.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Testimonios -->
-    <section class="testimonios section-padding" id="testimonios">
-        <div class="container">
-            <span class="eyebrow fade-in">EXPERIENCIAS REALES</span>
-            <h2 class="fade-in">Lo que dicen quienes ya hablaron.</h2>
-            <div class="testimonio-grid" id="testimonio-grid-container">
-                <div class="testimonio-card fade-in">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Estaba re perdida entre Derecho y Psico. Hablé 30 minutos con una abogada y me sacó todas las dudas que tenía hace meses.</p>
-                    <div class="testimonio-author">Sofi M.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">En mi casa querían que haga Medicina sí o sí. Hablé con un médico posta y me di cuenta que sí me copa, pero por mis propias razones.</p>
-                    <div class="testimonio-author">Tomi R.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.4s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Nadie me había explicado qué onda laburar en diseño de verdad. Esa charla me cambió la perspectiva.</p>
-                    <div class="testimonio-author">Vale G.</div>
-                    <div class="testimonio-detail">18 años</div>
-                </div>
-                <div class="testimonio-card fade-in" style="transition-delay: 0.6s;">
-                    <div class="quote-icon">"</div>
-                    <p class="testimonio-text">Yo pensaba que Ingeniería era solo hacer cuentas. Un ingeniero de 25 me mostró que era mucho más que eso.</p>
-                    <div class="testimonio-author">Mati L.</div>
-                    <div class="testimonio-detail">17 años</div>
-                </div>
-                
-                <div class="testimonio-card fade-in" id="btnAgregarResena" onclick="abrirModal()" style="background: transparent; border: 1px dashed rgba(204,41,54,0.35); border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: all 0.2s ease;">
-                    <div style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(204,41,54,0.5); display: flex; align-items: center; justify-content: center; font-size: 24px; color: #CC2936;">+</div>
-                    <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: #6B7280; text-align: center;">Contá tu experiencia</div>
+                <div class="pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" 
+                  stroke-linejoin="round" style="flex-shrink:0;">
+                  <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                  <path d="M21 3v5h-5"/>
+                  <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                  <path d="M3 21v-5h5"/>
+                  </svg>
+                  Querés cambiar de carrera
                 </div>
             </div>
             
-            <style>
-                #btnAgregarResena:hover {
-                    border-color: rgba(204,41,54,0.7) !important;
-                    background: rgba(204,41,54,0.04) !important;
-                }
-            </style>
+            <div class="hero-microcopy" style="margin-top: 28px;">100% HUMANO · SIN IA · SIN TESTS</div>
         </div>
-    </section>
-
-    <!-- 7. FAQ -->
-    <section class="faq section-padding" id="faq">
-        <div class="container">
-            <span class="eyebrow fade-in">LO QUE TODOS PREGUNTAN</span>
-            <h2 class="fade-in">Respuestas directas.</h2>
-            <div class="faq-container">
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Cuánto dura una sesión?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Entre 20 y 30 minutos.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Cuánto cuesta?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Cada profesional pone su precio. Generalmente entre $2.000 y $8.000 ARS.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Los profesionales son verificados?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, cada profesional pasa por un proceso de verificación.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Puedo hablar con más de un profesional?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, podés agendar tantas llamadas como quieras.</p>
-                    </div>
-                </div>
-                <div class="faq-item fade-in">
-                    <div class="faq-question">
-                        <span>¿Qué pasa si no puedo asistir?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Podés cancelar o reprogramar hasta 24 horas antes.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Formulario Estudiantes + CTA Profesionales -->
-    <div id="estudiantes-y-profesionales">
         
-        <!-- Bloque A: Formulario Estudiantes -->
-        <section class="form-estudiantes" id="form-estudiantes">
-            <div class="container">
-                <div class="form-wrapper fade-in">
-                    <span class="eyebrow">ENCONTRÁ TU PROFESIONAL</span>
-                    <h2>¿Con qué carrera querés empezar?</h2>
-                    
-                    <div id="step-1">
-                        <div class="form-input-group">
-                            <input type="text" id="carrera-input" class="form-input" placeholder="Ej: Medicina, Arquitectura, Derecho...">
-                            <button id="btn-buscar" class="btn btn-primary">BUSCAR PROFESIONALES &rarr;</button>
-                        </div>
-                    </div>
+        <div style="position:relative;overflow:hidden;display:flex;
+        flex-direction:column;justify-content:center;gap:16px;
+        padding:40px 0 40px 24px;min-height:100%;">
 
-                    <div id="step-2" style="display: none;">
-                        <p style="margin-bottom: 1rem; color: var(--white-warm); font-size: 1.1rem;">Estamos cargando los primeros profesionales. Dejanos tu mail y te avisamos.</p>
-                        <div class="form-input-group">
-                            <input type="email" id="email-input" class="form-input" placeholder="tu@email.com">
-                            <button id="btn-avisame" class="btn btn-primary">AVISAME &rarr;</button>
-                        </div>
-                        <p id="form-message" class="form-message"></p>
-                    </div>
-                    
-                    <span class="form-note">Si tu carrera no está, la agregamos. Escribinos.</span>
-                </div>
+          <!-- NOVAN TICKER ANIMADO -->
+          <div style="overflow:hidden;width:100%;display:flex;align-items:center;padding:10px 0;">
+            <div style="position:relative;display:inline-block;">
+              <span id="novanTicker" style="
+                font-family:'Cormorant Garamond',serif;
+                font-weight:700;
+                font-size:clamp(100px,13vw,200px);
+                white-space:nowrap;
+                display:inline-block;
+                line-height:1;
+                letter-spacing:-0.02em;
+              "><span style="color:#CC2936;">N</span><span style="color:#0A0A0A;">OVAN</span></span>
+              
+              <div style="
+                position: absolute;
+                top: -2px;
+                right: 0;
+                bottom: -2px;
+                background: #F2F0ED;
+                border-left: clamp(4px, 0.8vw, 8px) solid #CC2936;
+                width: 100%;
+                animation: typing-mask 6s cubic-bezier(0.4, 0, 0.2, 1) infinite, blink-caret 0.75s step-end infinite;
+              "></div>
             </div>
-        </section>
+          </div>
 
-        <!-- Separador Visual -->
-        <div style="padding: 80px 0;">
-            <div style="max-width: 200px; margin: 0 auto; border-top: 1px solid var(--grey-mid);"></div>
+          <!-- DOS RECUADROS -->
+          <div style="display:flex;flex-direction:column;gap:12px;
+          padding-right:32px;">
+
+            <!-- RECUADRO NEGRO — datos -->
+            <div style="background:#0A0A0A;border-radius:16px;
+            padding:24px 28px;display:flex;gap:32px;align-items:center;
+            flex-wrap:wrap;">
+
+              <div>
+                <div style="font-family:'Inter',sans-serif;font-weight:800;
+                font-size:28px;color:#CC2936;line-height:1;">1 de cada 4</div>
+                <div style="font-family:'Inter',sans-serif;font-size:10px;
+                font-weight:500;color:#6B7280;margin-top:4px;
+                letter-spacing:0.08em;text-transform:uppercase;">
+                cambia de carrera</div>
+              </div>
+
+              <div style="width:1px;height:40px;
+              background:rgba(255,255,255,0.08);"></div>
+
+              <div>
+                <div style="font-family:'Inter',sans-serif;font-weight:800;
+                font-size:28px;color:#CC2936;line-height:1;">73%</div>
+                <div style="font-family:'Inter',sans-serif;font-size:10px;
+                font-weight:500;color:#6B7280;margin-top:4px;
+                letter-spacing:0.08em;text-transform:uppercase;">
+                nunca la termina</div>
+              </div>
+
+              <div style="width:1px;height:40px;
+              background:rgba(255,255,255,0.08);"></div>
+
+              <div>
+                <div style="font-family:'Inter',sans-serif;font-weight:800;
+                font-size:28px;color:#CC2936;line-height:1;">30 min</div>
+                <div style="font-family:'Inter',sans-serif;font-size:10px;
+                font-weight:500;color:#6B7280;margin-top:4px;
+                letter-spacing:0.08em;text-transform:uppercase;">
+                para decidir mejor</div>
+              </div>
+
+            </div>
+
+            <!-- RECUADRO BLANCO/CLARO — botones -->
+            <div style="background:#FFFFFF;border-radius:16px;
+            padding:24px 28px;display:flex;gap:12px;
+            align-items:center;flex-wrap:wrap;">
+
+              <a href="#estudiantes" style="
+                background:#CC2936;color:#FFFFFF;
+                border-radius:10px;padding:14px 24px;
+                font-family:'Inter',sans-serif;
+                font-size:14px;font-weight:600;
+                text-decoration:none;
+                transition:background 0.2s ease;
+                white-space:nowrap;
+              "
+              onmouseover="this.style.background='#E8303D'"
+              onmouseout="this.style.background='#CC2936'">
+                Quiero orientación →
+              </a>
+
+              <a href="profesionales.html" style="
+                background:transparent;
+                border:1.5px solid #0A0A0A;
+                color:#0A0A0A;
+                border-radius:10px;padding:14px 24px;
+                font-family:'Inter',sans-serif;
+                font-size:14px;font-weight:600;
+                text-decoration:none;
+                transition:all 0.2s ease;
+                white-space:nowrap;
+              "
+              onmouseover="this.style.background='#0A0A0A';
+              this.style.color='#FFFFFF'"
+              onmouseout="this.style.background='transparent';
+              this.style.color='#0A0A0A'">
+                Soy profesional →
+              </a>
+
+            </div>
+
+          </div>
         </div>
-
-        <!-- Bloque B: CTA Profesionales -->
-        <section class="cta-profesionales" id="cta-profesionales">
-            <div class="container">
-                <div class="cta-content fade-in">
-                    <span class="eyebrow" style="text-align: center; color: var(--red-primary);">PARA PROFESIONALES</span>
-                    <h2 style="font-family: var(--font-display); text-align: center; color: var(--white-main);">¿Tenés experiencia real en tu carrera?</h2>
-                    <p class="cta-subtitle" style="font-family: var(--font-body); font-weight: 300; text-align: center; color: var(--white-warm);">Sumate a la red de profesionales Novan y generá ingresos compartiendo lo que sabés.</p>
-                    
-                    <a href="profesionales.html" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem; margin-bottom: 1.5rem;">Quiero ser referente &rarr;</a>
-                    <div class="trust-signal" style="display: block; color: var(--grey-sec);">INSCRIPCIÓN ABIERTA &middot; SIN COSTO &middot; 5 MINUTOS</div>
-                </div>
+        
+        <div class="hero-footer">
+            <div class="hf-block hf-block-1">
+                <div class="hf-title">Sin IA</div>
+                <div class="hf-subtitle">Solo conversaciones reales</div>
             </div>
-        </section>
-    </div>
+            <div class="hf-block hf-block-2">
+                <div class="hf-title">Sin registro</div>
+                <div class="hf-subtitle">Empezás en minutos</div>
+            </div>
+            <div class="hf-block hf-block-3">
+                <div class="hf-title">Profesionales jóvenes</div>
+                <div class="hf-subtitle">1 a 5 años de experiencia</div>
+            </div>
+        </div>
+    </section>
 
-    <!-- 9. Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div style="text-align: center; width: 100%;">
-                    <a href="#" class="logo" style="margin-bottom: 0.5rem; display: block;"><span>N</span>ovan</a>
-                    <p class="footer-tagline">Orientación vocacional real. De humano a humano.</p>
+    <!-- 2. COMO FUNCIONA -->
+    <section class="como-funciona" id="como-funciona">
+        <div class="cf-eyebrow">ASÍ DE SIMPLE</div>
+        <h2 class="cf-title">Tres pasos.</h2>
+        <h2 class="cf-subtitle">Una decisión mejor.</h2>
+        
+        <div class="cf-grid">
+            <div class="cf-card">
+                <div class="cf-num">01</div>
+                <div class="cf-card-title">Elegís tu carrera</div>
+                <div class="cf-card-desc">Buscás la carrera y encontrás profesionales disponibles.</div>
+            </div>
+            <div class="cf-card">
+                <div class="cf-num">02</div>
+                <div class="cf-card-title">Reservás una sesión</div>
+                <div class="cf-card-desc">Elegís horario y confirmás en menos de 2 minutos.</div>
+            </div>
+            <div class="cf-card">
+                <div class="cf-num">03</div>
+                <div class="cf-card-title">Hablás 30 minutos</div>
+                <div class="cf-card-desc">Una videollamada real. Sin guión. Sin IA. Solo la verdad.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FORMULARIO ESTUDIANTES -->
+    <section class="estudiantes-form" id="estudiantes">
+        <div class="form-container">
+            <span class="form-eyebrow">SER EL PRIMERO EN SABER</span>
+            <h2 class="form-title">Anotate. Te avisamos cuando tu carrera esté disponible.</h2>
+            <p class="form-subtitle">Sin spam. Sin registro. Solo un aviso.</p>
+            
+            <div id="step-1">
+                <div class="input-group">
+                    <input type="text" id="carrera-input" class="form-input" placeholder="¿Qué carrera te interesa?">
                 </div>
+                <button class="form-btn" id="btn-buscar">BUSCAR CARRERA &rarr;</button>
             </div>
             
-            <div style="display: flex; justify-content: center; margin-top: 2rem;">
-                <div class="footer-links">
-                    <a href="#">Instagram</a>
-                    <a href="mailto:contacto@novan.ar">Contacto</a>
+            <div id="step-2" style="display: none;">
+                <div class="input-group">
+                    <input type="email" id="email-input" class="form-input" placeholder="Tu email para avisarte">
                 </div>
+                <button class="form-btn" id="btn-avisame">AVISAME &rarr;</button>
             </div>
+            
+            <p id="form-message" class="form-message"></p>
+        </div>
+    </section>
 
-            <div class="footer-bottom">
-                <p>&copy; 2026 Novan. Buenos Aires, Argentina.</p>
-                <p style="font-family: var(--font-body); font-size: 12px; color: #333333; margin-top: 0.5rem;">Hecho con café desde Buenos Aires.</p>
-            </div>
+    <!-- 4. CTA PROFESIONALES -->
+    <section class="cta-prof">
+        <h2 class="cta-title">¿Ya estás trabajando en tu carrera?</h2>
+        <p class="cta-subtitle">Sumate como profesional y empezá a monetizar tu experiencia.</p>
+        <a href="profesionales.html" class="hero-btn-primary" style="margin-top: 32px;">Quiero ser profesional &rarr;</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-left">
+            <div class="footer-logo"><span>N</span>ovan</div>
+            <div class="footer-text">&copy; 2026 Novan. Todos los derechos reservados.</div>
+        </div>
+        <div class="footer-links">
+            <a href="#">Contacto</a>
+            <a href="#">Instagram</a>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- JS FORM LOGIC -->
     <script>
         // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
+        const navbar = document.querySelector('.navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
@@ -1167,70 +473,6 @@
             }
         });
 
-        // Mobile Menu Logic
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const overlay = document.getElementById('overlay');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            if (mobileMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
-        hamburger.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                // Close all items
-                faqItems.forEach(faq => {
-                    faq.classList.remove('active');
-                });
-
-                // Open clicked item if it wasn't active
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        // Intersection Observer for Fade-In
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Stop observing once animated
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        const fadeElements = document.querySelectorAll('.fade-in');
-        fadeElements.forEach(el => observer.observe(el));
-
-        // Forms Logic
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUG16lp5e47xP5l4acG7qoA3yzIzcwd18rp-d6pShWjtrsAHywu28NCp5cqVc4angj/exec';
         
         const btnBuscar = document.getElementById('btn-buscar');
@@ -1251,7 +493,6 @@
             emailInput.focus();
         });
 
-        // Also trigger on Enter
         carreraInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') btnBuscar.click();
         });
@@ -1301,145 +542,6 @@
         emailInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') btnAvisame.click();
         });
-
     </script>
-<div id="modalResena" style="display:none; position:fixed; inset:0; 
-background:rgba(0,0,0,0.85); z-index:9999; align-items:center; 
-justify-content:center;">
-  <div style="background:#111111; border:1px solid rgba(255,255,255,0.08); 
-  border-radius:20px; padding:40px 36px; width:min(480px,90vw); 
-  position:relative;">
-    <button onclick="cerrarModal()" style="position:absolute; top:16px; 
-    right:20px; background:none; border:none; color:#6B7280; 
-    font-size:22px; cursor:pointer;">×</button>
-    <h3 style="font-family:Inter,sans-serif; font-size:18px; 
-    color:#F5F0EB; margin:0 0 4px;">¿Cómo fue tu sesión?</h3>
-    <p style="font-family:Inter,sans-serif; font-size:13px; 
-    color:#6B7280; margin:0 0 24px;">Tu reseña ayuda a otros 
-    estudiantes a animarse.</p>
-    <div style="display:flex; flex-direction:column; gap:12px;">
-      <input id="r-nombre" type="text" placeholder="Tu nombre y 
-      inicial (ej: Lucía F.)" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none;">
-      <input id="r-ciudad" type="text" placeholder="Tu ciudad" 
-      style="background:#1A1A1A; border:1px solid rgba(255,255,255,0.08); 
-      border-radius:8px; padding:12px 16px; color:#F5F0EB; 
-      font-family:Inter,sans-serif; font-size:14px; width:100%; 
-      box-sizing:border-box; outline:none;">
-      <input id="r-carrera" type="text" placeholder="¿Qué carrera 
-      consultaste?" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none;">
-      <div id="r-estrellas" style="display:flex; gap:6px; font-size:26px; 
-      cursor:pointer; color:#2A2A2A;">
-        <span onclick="setStars(1)">★</span>
-        <span onclick="setStars(2)">★</span>
-        <span onclick="setStars(3)">★</span>
-        <span onclick="setStars(4)">★</span>
-        <span onclick="setStars(5)">★</span>
-      </div>
-      <textarea id="r-texto" placeholder="Contá cómo fue la sesión..." 
-      rows="4" style="background:#1A1A1A; 
-      border:1px solid rgba(255,255,255,0.08); border-radius:8px; 
-      padding:12px 16px; color:#F5F0EB; font-family:Inter,sans-serif; 
-      font-size:14px; width:100%; box-sizing:border-box; outline:none; 
-      resize:none;"></textarea>
-      <button onclick="publicarResena()" style="background:#CC2936; 
-      color:white; border:none; border-radius:8px; padding:14px 28px; 
-      font-family:Inter,sans-serif; font-size:14px; font-weight:700; 
-      width:100%; cursor:pointer;">Publicar reseña</button>
-    </div>
-  </div>
-</div>
-
-<script>
-var starsSelected = 0;
-
-function abrirModal() {
-  var m = document.getElementById('modalResena');
-  m.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-
-function cerrarModal() {
-  var m = document.getElementById('modalResena');
-  m.style.display = 'none';
-  document.body.style.overflow = '';
-  starsSelected = 0;
-  setStars(0);
-  document.getElementById('r-nombre').value = '';
-  document.getElementById('r-ciudad').value = '';
-  document.getElementById('r-carrera').value = '';
-  document.getElementById('r-texto').value = '';
-}
-
-function setStars(n) {
-  starsSelected = n;
-  var spans = document.querySelectorAll('#r-estrellas span');
-  spans.forEach(function(s, i) {
-    s.style.color = i < n ? '#CC2936' : '#2A2A2A';
-  });
-}
-
-function publicarResena() {
-  var nombre = document.getElementById('r-nombre').value.trim();
-  var ciudad = document.getElementById('r-ciudad').value.trim();
-  var carrera = document.getElementById('r-carrera').value.trim();
-  var texto = document.getElementById('r-texto').value.trim();
-  
-  if (!nombre) { 
-    document.getElementById('r-nombre').style.borderColor = '#CC2936'; 
-    return; 
-  }
-  if (!texto) { 
-    document.getElementById('r-texto').style.borderColor = '#CC2936'; 
-    return; 
-  }
-
-  var meses = ['ene','feb','mar','abr','may','jun',
-                'jul','ago','sep','oct','nov','dic'];
-  var hoy = new Date();
-  var fecha = hoy.getDate() + ' ' + meses[hoy.getMonth()] + 
-              ' ' + hoy.getFullYear();
-  var estrellas = '★'.repeat(starsSelected || 5);
-  var subtitulo = ciudad ? ciudad : '';
-  if (carrera) subtitulo += subtitulo ? ' · ' + carrera : carrera;
-
-  var card = document.createElement('div');
-  card.style.cssText = 'background:#111111; border:1px solid ' +
-    'rgba(255,255,255,0.07); border-radius:16px; padding:28px 24px; ' +
-    'flex-shrink:0; width:320px;';
-  card.innerHTML = 
-    '<div style="background:rgba(204,41,54,0.08); border-radius:8px; ' +
-    'padding:8px 12px; display:flex; justify-content:space-between; ' +
-    'margin-bottom:12px;">' +
-    '<span style="font-family:Inter,sans-serif; font-size:12px; ' +
-    'font-weight:700; color:#F5F0EB;">' + nombre + 
-    (carrera ? ' · Sesión ' + carrera : '') + '</span>' +
-    '<span style="font-family:Inter,sans-serif; font-size:11px; ' +
-    'color:#6B7280;">' + fecha + '</span></div>' +
-    '<div style="color:#CC2936; font-size:14px; margin-bottom:12px;">' + 
-    estrellas + '</div>' +
-    '<p style="font-family:Inter,sans-serif; font-size:14px; ' +
-    'color:#D1CBC4; line-height:1.6; margin:0 0 16px;">' + 
-    texto + '</p>' +
-    '<strong style="font-family:Inter,sans-serif; font-size:13px; ' +
-    'color:#F5F0EB;">' + nombre + '</strong>' +
-    (subtitulo ? '<p style="font-family:Inter,sans-serif; font-size:12px; ' +
-    'color:#6B7280; margin:4px 0 0;">' + subtitulo + '</p>' : '');
-
-  var btnCard = document.getElementById('btnAgregarResena');
-  btnCard.parentNode.insertBefore(card, btnCard);
-  cerrarModal();
-}
-
-document.getElementById('modalResena')
-  .addEventListener('click', function(e) {
-    if (e.target === this) cerrarModal();
-  });
-</script>
 </body>
 </html>
